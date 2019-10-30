@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion 29
@@ -13,6 +14,19 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                    "room.schemaLocation":"$projectDir/schemas".toString(),
+                    "room.incremental":"true",
+                    "room.expandProjection":"true"
+                ]
+            }
+        }
     }
 
     buildTypes {
@@ -30,11 +44,87 @@ android {
     androidExtensions {
         experimental = true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main.java.srcDirs = ['src/main/kotlin']
+        main.assets.srcDirs = ['src/main/assets']
+
+        test.java.srcDirs = ['src/test/kotlin']
+        test.res.srcDirs = ['src/test/res']
+
+        androidTest.java.srcDirs = ['src/androidTest/kotlin']
+        androidTest.res.srcDirs = ['src/androidTest/res']
+    }
+
+    // Always show the result of every unit test, even if it passes.
+    testOptions.unitTests {
+        includeAndroidResources = true
+
+        all {
+            testLogging {
+                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+        }
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // Android spec dependencies
+    implementation "androidx.appcompat:appcompat:$version_androidx_core"
+    implementation "androidx.core:core-ktx:$version_androidx_core"
+    implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
+    implementation "com.google.android.material:material:$version_material"
+    implementation "androidx.viewpager2:viewpager2:$version_viewpager"
+    implementation "androidx.recyclerview:recyclerview:$version_recycler_view"
+
+    // Architecture Components
+    implementation "androidx.room:room-runtime:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
+    implementation "androidx.room:room-ktx:$version_room"
+    implementation "androidx.lifecycle:lifecycle-extensions:$version_arch_lifecycle"
+    kapt "androidx.lifecycle:lifecycle-common-java8:$version_arch_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_arch_lifecycle"
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
+    implementation "androidx.fragment:fragment:$version_fragment"
+
+    // Kotlin support
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
+
+    // Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
+
+    // Retrofit2 with moshi converter
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi:$version_moshi"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$version_moshi"
+
+    // Room
+    implementation "androidx.room:room-runtime:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
+
+    // 3rd party
+    implementation "com.yarolegovich:discrete-scrollview:$version_discrete_scrollview"
+    implementation "org.ocpsoft.prettytime:prettytime:$version_pretty_time"
+    implementation "io.coil-kt:coil:$version_coil"
+
+    // Dependencies for local unit tests
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
 }
