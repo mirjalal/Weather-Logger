@@ -1,8 +1,9 @@
-package com.talmir.weatherlogger
+package com.talmir.weatherlogger.domain.screens
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.talmir.weatherlogger.R
 
 class MainActivity : AppCompatActivity() {
 
