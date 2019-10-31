@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.talmir.weatherlogger.R
 import com.talmir.weatherlogger.databinding.FragmentHomeBinding
 import com.talmir.weatherlogger.helpers.Constants
+import com.talmir.weatherlogger.helpers.Fragment
 import com.talmir.weatherlogger.helpers.weather.Forecast
 import com.talmir.weatherlogger.helpers.weather.ForecastAdapter
 import com.talmir.weatherlogger.helpers.weather.WeatherStation
@@ -18,11 +17,14 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import kotlin.math.abs
 
-class HomeFragment : Fragment(),
+class HomeFragment : Fragment<HomeViewModel>(),
     DiscreteScrollView.ScrollStateChangeListener<ForecastAdapter.ForecastViewHolder>,
     DiscreteScrollView.OnItemChangedListener<ForecastAdapter.ForecastViewHolder> {
 
-    private val viewModel by viewModels<HomeViewModel>()
+    override val viewModelType: Class<HomeViewModel>
+        get() = HomeViewModel::class.java
+
+    //private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -34,8 +36,14 @@ class HomeFragment : Fragment(),
         binding.lifecycleOwner = this
 
         // TODO: make network request
+        viewModel.getForecastData()
+
         // TODO: get response
+
+
         // TODO: call WeatherStation.createForecast()
+//        WeatherStation.createForecast()
+
         // TODO: call initializeView()
 
         return binding.root
@@ -80,9 +88,9 @@ class HomeFragment : Fragment(),
         holder.hideItem()
 
     override fun onCurrentItemChanged(viewHolder: ForecastAdapter.ForecastViewHolder?, position: Int) {
-        if (viewHolder != null) {
+        viewHolder?.run {
             binding.forecastView.setForecast(forecasts[position])
-            viewHolder.showItem()
+            showItem()
         }
     }
 }

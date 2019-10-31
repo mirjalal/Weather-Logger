@@ -1,8 +1,9 @@
 package com.talmir.weatherlogger.helpers
 
-import androidx.fragment.app.viewModels
+import android.content.Context
+import androidx.lifecycle.ViewModelProvider
+import com.talmir.weatherlogger.WeatherLoggerApp
 import com.talmir.weatherlogger.data.ForecastsRepository
-import com.talmir.weatherlogger.domain.screens.home.HomeViewModel
 
 abstract class Fragment<ViewModel : androidx.lifecycle.ViewModel> : androidx.fragment.app.Fragment() {
     /**
@@ -15,9 +16,15 @@ abstract class Fragment<ViewModel : androidx.lifecycle.ViewModel> : androidx.fra
      */
     abstract val viewModelType: Class<ViewModel>
 
-//    val viewModel = viewModels<HomeViewModel> {
-//        ViewModelFactory(ForecastsRepository())
-//    }
+    private lateinit var repository: ForecastsRepository
 
-//    val viewModel = ViewModelProvider(.of(this, ViewModelFactory(repository)).get(viewModelClass)
+    lateinit var viewModel: ViewModel
+        private set
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        repository = (requireActivity().application as WeatherLoggerApp).forecastsRepository
+        viewModel = ViewModelProvider(this, ViewModelFactory(repository))[viewModelType]
+    }
 }
