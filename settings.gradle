@@ -1,2 +1,2 @@
-include ':app'
+include ':weather-logger'
 rootProject.name='Weather Logger'
