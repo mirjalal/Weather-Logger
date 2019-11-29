@@ -13,7 +13,7 @@ class ForecastsRemoteDataSource internal constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ForecastsDataSource {
 
-    override suspend fun getAllForecasts(): Result<List<Forecast>> = withContext(ioDispatcher) {
+    override suspend fun getForecastData(): Result<List<Forecast>> = withContext(ioDispatcher) {
         return@withContext try {
             val networkRequest = forecastDataRetrieverService.getForecastData()
             val data = networkRequest.body()?.list

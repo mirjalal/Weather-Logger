@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import com.talmir.weatherlogger.data.source.local.room.cities.CityDao
 import com.talmir.weatherlogger.data.source.local.room.cities.CityEntity
 import com.talmir.weatherlogger.data.source.local.room.city_forecast_data.CityForecastDataDao
-import com.talmir.weatherlogger.data.source.local.room.city_forecast_data.CityForecastDataEntity
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataDao
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 
@@ -16,7 +15,7 @@ import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDat
  * The fact that this has very few comments emphasizes its coolness.
  */
 @Database(
-    entities = [CityEntity::class, CityForecastDataEntity::class, ForecastDataEntity::class],
+    entities = [CityEntity::class, ForecastDataEntity::class],
     version = 1,
     exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {

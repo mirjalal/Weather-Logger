@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.talmir.weatherlogger.R
+import com.talmir.weatherlogger.data.Result
 import com.talmir.weatherlogger.databinding.FragmentHomeBinding
 import com.talmir.weatherlogger.helpers.Constants
 import com.talmir.weatherlogger.helpers.weather.Forecast
@@ -32,6 +34,22 @@ class HomeFragment : Fragment(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.lifecycleOwner = this
+
+        viewModel.forecastData.observe(this, Observer {
+            it?.run {
+                when(this) {
+                    is Result.Success -> {
+                        println("success! data received: ${this.data}")
+                    }
+                    is Result.Error -> {
+                        println("error occurred: ${this.exception}")
+                    }
+                    else -> {
+                        println("something else received: $this")
+                    }
+                }
+            }
+        })
 
         // TODO: make network request
         // TODO: get response

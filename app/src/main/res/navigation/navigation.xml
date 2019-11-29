@@ -16,7 +16,6 @@
         android:label="FragmentCityForecastDetails" >
         <argument
             android:name="cityId"
-            app:argType="integer"
-            android:defaultValue="587084" />
+            app:argType="long" />
     </fragment>
 </navigation>

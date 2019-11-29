@@ -14,7 +14,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.annotation.ArrayRes
 import androidx.annotation.RequiresApi
-import coil.api.load
 import com.talmir.weatherlogger.R
 import com.talmir.weatherlogger.databinding.ViewForecastBinding
 
@@ -85,7 +84,7 @@ class ForecastView : LinearLayout {
             initGradient()
 
         binding.dataWeatherDescription = weatherTypes.toString()
-        binding.dataWeatherTemperature = forecast.temperature
+        binding.dataWeatherTemperature = forecast.temperature.toString()
 
 //        binding.weatherImage.load(weatherTypes.getWeatherType(1))
         invalidate()
@@ -116,7 +115,7 @@ class ForecastView : LinearLayout {
             (evaluator.evaluate(fraction, startColors[2], endColors[2]) as Int)
         )
 
-    private fun weatherToGradient(weatherType: Int) =
+    private fun weatherToGradient(weatherType: String) =
         if (now in (sunset + 1) until sunrise) { // darken colors
 //                        switch (weatherType) {
 //                            case PERIODIC_CLOUDS:

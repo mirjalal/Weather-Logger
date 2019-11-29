@@ -2,6 +2,9 @@ package com.talmir.weatherlogger.data.source.remote.network
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.talmir.weatherlogger.helpers.cityIconById
+import com.talmir.weatherlogger.helpers.cityNameById
+import com.talmir.weatherlogger.helpers.weather.Forecast
 
 @JsonClass(generateAdapter = true)
 data class ApiModel(
@@ -21,7 +24,9 @@ data class ApiModel(
         @Json(name = "weather")
         val weather: List<Weather>,
         @Json(name = "wind")
-        val wind: Wind
+        val wind: Wind,
+        @Json(name = "id")
+        val cityId: Int
     ) {
         @JsonClass(generateAdapter = true)
         data class Clouds(

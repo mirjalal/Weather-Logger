@@ -92,11 +92,15 @@ dependencies {
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
+
     implementation "androidx.lifecycle:lifecycle-extensions:$version_arch_lifecycle"
     kapt "androidx.lifecycle:lifecycle-common-java8:$version_arch_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_arch_lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_arch_lifecycle"
+
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
+
     implementation "androidx.fragment:fragment:$version_fragment"
 
     // Kotlin support
@@ -127,4 +131,11 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+
+    // AndroidX test - intrumented testing
+    androidTestImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$androidXTestRulesVersion"
+    androidTestImplementation "androidx.room:room-testing:$version_room"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 }

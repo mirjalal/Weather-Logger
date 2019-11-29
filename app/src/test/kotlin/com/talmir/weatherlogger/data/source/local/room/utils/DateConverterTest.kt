@@ -11,7 +11,7 @@ class DateConverterTest {
     fun dateToLong_nullValue_returnsNull() {
         val date: Date? = null
 
-        val result = DateConverter.dateToLong(date)
+        val result = DateConverter().dateToLong(date)
 
         assertThat(result, `is`(nullValue()))
     }
@@ -20,7 +20,7 @@ class DateConverterTest {
     fun dateToLong_dateValue_returnsTime() {
         val date = Date()
 
-        val result = DateConverter.dateToLong(date)
+        val result = DateConverter().dateToLong(date)
 
         assertThat(result, `is`(date.time))
     }
@@ -29,7 +29,7 @@ class DateConverterTest {
     fun longToDate_nullValue_returnsNull() {
         val timeInLong: Long? = null
 
-        val result = DateConverter.longToDate(timeInLong)
+        val result = DateConverter().longToDate(timeInLong)
 
         assertThat(result, `is`(nullValue()))
     }
@@ -38,7 +38,7 @@ class DateConverterTest {
     fun longToDate_longValue_returnsDate() {
         val timeInLong = 1572328780L
 
-        val result = DateConverter.longToDate(timeInLong)
+        val result = DateConverter().longToDate(timeInLong)
 
         assertThat(result, `is`(Date(timeInLong)))
     }

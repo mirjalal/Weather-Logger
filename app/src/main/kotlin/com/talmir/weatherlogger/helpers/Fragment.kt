@@ -1,6 +1,7 @@
 package com.talmir.weatherlogger.helpers
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.talmir.weatherlogger.data.ForecastsRepository
 import com.talmir.weatherlogger.domain.screens.home.HomeViewModel
 

@@ -5,5 +5,8 @@ import androidx.room.OnConflictStrategy.IGNORE
 
 interface BaseDao<E> {
     @Insert(onConflict = IGNORE)
-    suspend fun insert(vararg data: E): LongArray
+    suspend fun saveData(data: List<E>)
+
+    @Insert(onConflict = IGNORE)
+    suspend fun saveData(data: E)
 }

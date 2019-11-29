@@ -9,9 +9,10 @@ import com.talmir.weatherlogger.data.source.remote.ForecastsRemoteDataSource
 class WeatherLoggerApp : Application() {
     // TODO: Consider a Dependency Injection framework.
     val forecastsRepository: ForecastsRepository by lazy {
+        val db = AppDatabase.getDatabase(this)
         ForecastsRepository(
             ForecastsRemoteDataSource(),
-            ForecastsLocalDataSource(AppDatabase.getDatabase(this).forecastDataDao())
+            ForecastsLocalDataSource(db.forecastDataDao(), db.cityForecastDataDao())
         )
     }
 }
