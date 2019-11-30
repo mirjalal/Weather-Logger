@@ -4,27 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.talmir.weatherlogger.R
-import com.talmir.weatherlogger.data.Result
 import com.talmir.weatherlogger.databinding.FragmentHomeBinding
 import com.talmir.weatherlogger.helpers.Constants
 import com.talmir.weatherlogger.helpers.weather.Forecast
 import com.talmir.weatherlogger.helpers.weather.ForecastAdapter
-import com.talmir.weatherlogger.helpers.weather.WeatherStation
 import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 import kotlin.math.abs
 
-class HomeFragment : Fragment(),
+class HomeFragment : com.talmir.weatherlogger.helpers.Fragment<HomeViewModel>(),
     DiscreteScrollView.ScrollStateChangeListener<ForecastAdapter.ForecastViewHolder>,
     DiscreteScrollView.OnItemChangedListener<ForecastAdapter.ForecastViewHolder> {
 
-    private val viewModel by viewModels<HomeViewModel>()
+    override val viewModelType: Class<HomeViewModel>
+        get() = HomeViewModel::class.java
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -32,35 +27,22 @@ class HomeFragment : Fragment(),
     private var cityIndex = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        viewModel.forecastData.observe(this, Observer {
-            it?.run {
-                when(this) {
-                    is Result.Success -> {
-                        println("success! data received: ${this.data}")
-                    }
-                    is Result.Error -> {
-                        println("error occurred: ${this.exception}")
-                    }
-                    else -> {
-                        println("something else received: $this")
-                    }
-                }
+        viewModel.forecastData.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty())
+                println("no data")
+            else {
+                forecasts = it
+                initializeView()
             }
         })
-
-        // TODO: make network request
-        // TODO: get response
-        // TODO: call WeatherStation.createForecast()
-        // TODO: call initializeView()
 
         return binding.root
     }
 
     private fun initializeView() {
-        forecasts = WeatherStation.forecasts
         binding.forecastCityPicker.run {
             setSlideOnFling(true)
             adapter = ForecastAdapter(forecasts)

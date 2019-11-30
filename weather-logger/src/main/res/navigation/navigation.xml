@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/fragmentHome">
     <fragment
         android:id="@+id/fragmentHome"
         android:name="com.talmir.weatherlogger.domain.screens.home.HomeFragment"
-        android:label="FragmentHome" >
+        android:label="FragmentHome">
         <action
             android:id="@+id/action_fragmentHome_to_fragmentCityForecastDetails"
             app:destination="@id/fragmentCityForecastDetails" />
@@ -13,9 +14,12 @@
     <fragment
         android:id="@+id/fragmentCityForecastDetails"
         android:name="com.talmir.weatherlogger.domain.screens.details.CityForecastDetailsFragment"
-        android:label="FragmentCityForecastDetails" >
+        android:label="FragmentCityForecastDetails">
         <argument
             android:name="cityId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_fragmentCityForecastDetails_to_fragmentHome"
+            app:destination="@id/fragmentHome" />
     </fragment>
 </navigation>

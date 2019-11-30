@@ -7,7 +7,8 @@ import com.talmir.weatherlogger.domain.screens.details.CityForecastDetailsViewMo
 import com.talmir.weatherlogger.domain.screens.home.HomeViewModel
 
 class ViewModelFactory(
-    private val forecastRepository: ForecastsRepository
+    private val forecastRepository: ForecastsRepository,
+    private val cityId: Long = 0L
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("unchecked_cast")
@@ -16,7 +17,7 @@ class ViewModelFactory(
             isAssignableFrom(HomeViewModel::class.java) ->
                 HomeViewModel(forecastRepository)
             isAssignableFrom(CityForecastDetailsViewModel::class.java) ->
-                CityForecastDetailsViewModel(forecastRepository)
+                CityForecastDetailsViewModel(forecastRepository, cityId)
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

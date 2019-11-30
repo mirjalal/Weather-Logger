@@ -16,6 +16,8 @@ abstract class Fragment<ViewModel : androidx.lifecycle.ViewModel> : androidx.fra
      */
     abstract val viewModelType: Class<ViewModel>
 
+    open val cityId: Long = 0L
+
     private lateinit var repository: ForecastsRepository
 
     lateinit var viewModel: ViewModel
@@ -25,6 +27,6 @@ abstract class Fragment<ViewModel : androidx.lifecycle.ViewModel> : androidx.fra
         super.onAttach(context)
 
         repository = (requireActivity().application as WeatherLoggerApp).forecastsRepository
-        viewModel = ViewModelProvider(this, ViewModelFactory(repository))[viewModelType]
+        viewModel = ViewModelProvider(this, ViewModelFactory(repository, cityId))[viewModelType]
     }
 }

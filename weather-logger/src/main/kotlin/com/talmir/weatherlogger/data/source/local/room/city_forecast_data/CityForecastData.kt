@@ -1,11 +1,9 @@
 package com.talmir.weatherlogger.data.source.local.room.city_forecast_data
 
-import com.talmir.weatherlogger.data.source.local.room.cities.CityEntity
-import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
-
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.talmir.weatherlogger.helpers.toForecast
+import com.talmir.weatherlogger.data.source.local.room.cities.CityEntity
+import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 
 data class CityForecastData(
     @Embedded val city: CityEntity,

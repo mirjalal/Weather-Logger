@@ -4,11 +4,14 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.talmir.weatherlogger.data.source.local.room.cities.CityDao
 import com.talmir.weatherlogger.data.source.local.room.cities.CityEntity
 import com.talmir.weatherlogger.data.source.local.room.city_forecast_data.CityForecastDataDao
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataDao
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
+import com.talmir.weatherlogger.helpers.Constants
+import java.util.concurrent.Executors
 
 /**
  * This is the backend. The database. This used to be done by the OpenHelper.
@@ -38,6 +41,26 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var DATABASE_INSTANCE: AppDatabase? = null
 
+        private val cities = listOf(
+            CityEntity(Constants.BAKU_CITY_ID, "BAKU"),
+            CityEntity(Constants.SUMGAIT_CITY_ID, "SUMGAIT"),
+            CityEntity(Constants.LENKARAN_CITY_ID, "LENKARAN"),
+            CityEntity(Constants.SHAMAKHI_CITY_ID, "SHAMAKHI"),
+            CityEntity(Constants.GOYCHAY_CITY_ID, "GOYCHAY")
+        )
+
+        /**
+         * Multiple threads can ask for the database at the same time, ensure we only initialize
+         * it once by using synchronized. Only one thread may enter a synchronized block at a
+         * time.
+         *
+         * @param application used to get access to the filesystem.
+         */
+        fun getInstance(application: Application): AppDatabase =
+            DATABASE_INSTANCE ?: synchronized(this) {
+                DATABASE_INSTANCE ?: buildDatabase(application).also { DATABASE_INSTANCE = it }
+            }
+
         /**
          * Helper function to get the database.
          *
@@ -55,24 +78,22 @@ abstract class AppDatabase : RoomDatabase() {
          *
          * @param application used to get access to the filesystem.
          */
-        fun getDatabase(application: Application): AppDatabase {
-            val tempInstance = DATABASE_INSTANCE
-            if (tempInstance != null)
-                return tempInstance
+        private fun buildDatabase(application: Application) =
+            Room.databaseBuilder(application.applicationContext,
+                AppDatabase::class.java,
+                    "weather_logger_db"
+                )
+                // prepopulate the database after onCreate was called
+                .addCallback(object : Callback() {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
+                        // insert the data on the IO Thread
+                        Executors.newSingleThreadExecutor().execute {
+                            getInstance(application).cityDao().saveData(cities)
+                        }
+                    }
+                })
+                .build()
 
-            // Multiple threads can ask for the database at the same time, ensure we only initialize
-            // it once by using synchronized. Only one thread may enter a synchronized block at a
-            // time.
-            synchronized(this) {
-                val instance = Room
-                    .databaseBuilder(
-                        application.applicationContext,
-                        AppDatabase::class.java,
-                        "weather_logger_db")
-                    .build()
-                DATABASE_INSTANCE = instance
-                return instance
-            }
-        }
     }
 }

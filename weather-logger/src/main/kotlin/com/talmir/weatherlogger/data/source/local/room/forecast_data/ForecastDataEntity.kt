@@ -1,10 +1,10 @@
 package com.talmir.weatherlogger.data.source.local.room.forecast_data
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.talmir.weatherlogger.data.source.local.room.utils.DateConverter
-import com.talmir.weatherlogger.helpers.cityIconById
-import com.talmir.weatherlogger.helpers.cityNameById
-import com.talmir.weatherlogger.helpers.weather.Forecast
 import java.util.Date
 
 @Entity(tableName = "forecast_data")
@@ -18,6 +18,6 @@ data class ForecastDataEntity(
     @ColumnInfo(name = "wind_speed") val weatherWindSpeed: Float,
     val sunrise: Int,
     val sunset: Int,
-    @ColumnInfo(name = "timestamp") val requestTime: Date = Date(),
+    @ColumnInfo(name = "timestamp") val requestTime: Date,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "forecast_data_id") var id: Long = 0L
 )

@@ -35,15 +35,15 @@
                 android:textSize="74sp"
                 tools:text="9" />
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginTop="14dp"-->
-<!--                android:fontFamily="sans-serif-light"-->
-<!--                android:gravity="top"-->
-<!--                android:text="@string/celsius"-->
-<!--                android:textColor="@android:color/white"-->
-<!--                android:textSize="32sp" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="top"
+                android:text="@string/celsius"
+                android:textColor="@android:color/white"
+                android:textSize="32sp" />
         </LinearLayout>
 
         <Space

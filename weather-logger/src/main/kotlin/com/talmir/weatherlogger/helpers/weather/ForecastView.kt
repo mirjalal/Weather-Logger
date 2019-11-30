@@ -9,87 +9,80 @@ import android.graphics.Shader
 import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.LayoutInflater
+import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.annotation.RequiresApi
 import com.talmir.weatherlogger.R
-import com.talmir.weatherlogger.databinding.ViewForecastBinding
-
+import java.util.Locale
 
 class ForecastView : LinearLayout {
+    private var gradientPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var currentGradient: IntArray = IntArray(3)
+    private var weatherDescription: TextView
+    private var weatherTemperature: TextView
+    private var weatherImage: ImageView
+    private var evaluator: ArgbEvaluator = ArgbEvaluator()
+    private var sunset: Long = 0
+    private var sunrise: Long = 0
+    private var now: Long = 0
 
-    private val FACTOR: Long = 1000
-
-    private val gradientPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private lateinit var currentGradient: IntArray
-
-    private var binding: ViewForecastBinding
-
-    private val evaluator = ArgbEvaluator()
-
-    private var sunset = 0L
-    private var sunrise = 0L
-    private var now = 0L
+    companion object {
+        private const val FACTOR: Long = 1000
+    }
 
     init {
         setWillNotDraw(false)
-
         orientation = VERTICAL
         gravity = Gravity.CENTER_HORIZONTAL
-
-        binding = ViewForecastBinding.inflate(LayoutInflater.from(context))
+        View.inflate(context, R.layout.view_forecast, this)
+        weatherDescription = findViewById(R.id.weather_description)
+        weatherImage = findViewById(R.id.weather_image)
+        weatherTemperature = findViewById(R.id.weather_temperature)
     }
 
-    @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs)
-
-    @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    @JvmOverloads
+    constructor(context: Context?) : super(context)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
     private fun initGradient() {
-        val centerX = width * .5f
-        val gradient = LinearGradient(
+        val centerX = width * 0.5f
+        val gradient: Shader = LinearGradient(
             centerX, 0f, centerX, height.toFloat(),
             currentGradient, null,
-            Shader.TileMode.MIRROR)
+            Shader.TileMode.MIRROR
+        )
         gradientPaint.shader = gradient
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        if (currentGradient != null) {
+        if (currentGradient.isEmpty())
             initGradient()
-        }
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), gradientPaint)
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), gradientPaint)
         super.onDraw(canvas)
     }
 
     fun setForecast(forecast: Forecast) {
-        val weatherTypes = forecast.weatherType // FIXME:
-        currentGradient = weatherToGradient(weatherTypes)
+        val weatherType = forecast.weatherType
+        currentGradient = weatherToGradient(weatherType)
         sunrise = forecast.sunrise * FACTOR
         sunset = forecast.sunset * FACTOR
         now = System.currentTimeMillis()
-
         if (width != 0 && height != 0)
             initGradient()
-
-        binding.dataWeatherDescription = weatherTypes.toString()
-        binding.dataWeatherTemperature = forecast.temperature.toString()
-
-//        binding.weatherImage.load(weatherTypes.getWeatherType(1))
+        weatherDescription.text = weatherType
+        weatherTemperature.text = String.format(Locale.ROOT, "%d", forecast.temperature)
         invalidate()
-
-        binding.weatherImage.animate()
+        weatherImage.animate()
             .scaleX(1f).scaleY(1f)
             .setInterpolator(AccelerateDecelerateInterpolator())
             .setDuration(300)
@@ -97,13 +90,12 @@ class ForecastView : LinearLayout {
     }
 
     fun onScroll(fraction: Float, oldForecast: Forecast, newForecast: Forecast) {
-        binding.weatherImage.scaleX = fraction
-        binding.weatherImage.scaleY = fraction
+        weatherImage.scaleX = fraction
+        weatherImage.scaleY = fraction
         currentGradient = mix(
             fraction,
             weatherToGradient(newForecast.weatherType),
-            weatherToGradient(oldForecast.weatherType)
-        )
+            weatherToGradient(oldForecast.weatherType))
         initGradient()
         invalidate()
     }
@@ -141,7 +133,11 @@ class ForecastView : LinearLayout {
                 WeatherTypes.ATMOSPHERE -> colors(R.array.gradientAtmosphere)
                 WeatherTypes.CLEAR -> colors(R.array.gradientClear)
                 WeatherTypes.CLOUDS -> colors(R.array.gradientClouds)
-                else -> throw IllegalArgumentException()
+                else -> {
+                    println(weatherType)
+                    colors(R.array.gradientClouds)
+                    //throw IllegalArgumentException()
+                }
             }
         }
 

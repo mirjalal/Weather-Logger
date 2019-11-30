@@ -87,21 +87,19 @@ dependencies {
     implementation "com.google.android.material:material:$version_material"
     implementation "androidx.viewpager2:viewpager2:$version_viewpager"
     implementation "androidx.recyclerview:recyclerview:$version_recycler_view"
+    implementation "androidx.fragment:fragment:$version_fragment"
 
     // Architecture Components
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
-
     implementation "androidx.lifecycle:lifecycle-extensions:$version_arch_lifecycle"
     kapt "androidx.lifecycle:lifecycle-common-java8:$version_arch_lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_arch_lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_arch_lifecycle"
-
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_arch_lifecycle"
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
-
-    implementation "androidx.fragment:fragment:$version_fragment"
 
     // Kotlin support
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
@@ -118,14 +116,11 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$version_moshi"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$version_moshi"
 
-    // Room
-    implementation "androidx.room:room-runtime:$version_room"
-    kapt "androidx.room:room-compiler:$version_room"
-
     // 3rd party
     implementation "com.yarolegovich:discrete-scrollview:$version_discrete_scrollview"
     implementation "org.ocpsoft.prettytime:prettytime:$version_pretty_time"
-    implementation "io.coil-kt:coil:$version_coil"
+    implementation 'pl.hypeapp:materialtimelineview:1.1'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.2.Final'
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junitVersion"

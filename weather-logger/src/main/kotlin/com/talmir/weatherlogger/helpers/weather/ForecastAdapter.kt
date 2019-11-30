@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
-import coil.api.load
 import com.talmir.weatherlogger.R
 import com.talmir.weatherlogger.databinding.ItemCityCardBinding
 
@@ -22,9 +20,6 @@ class ForecastAdapter(private val itemList: Collection<Forecast>) :
 
     companion object {
         private lateinit var recyclerView: RecyclerView
-        private val imageLoader = ImageLoader(recyclerView.context) {
-
-        }
     }
 
     override fun onAttachedToRecyclerView(_recyclerView: RecyclerView) {
@@ -44,9 +39,9 @@ class ForecastAdapter(private val itemList: Collection<Forecast>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Forecast) {
-//            val iconTint = ContextCompat.getColor(binding.cityImage.context, R.color.grayIconTint)
-//            binding.cityImage.setColorFilter(iconTint)
-            binding.cityImage.load(item.cityIcon)
+            val iconTint = ContextCompat.getColor(binding.cityImage.context, R.color.grayIconTint)
+            binding.cityImage.setColorFilter(iconTint)
+            binding.cityImage.setImageResource(item.cityIcon)
             binding.dataCityName = item.cityName
 
             binding.container.setOnClickListener {
@@ -66,8 +61,7 @@ class ForecastAdapter(private val itemList: Collection<Forecast>) :
 
         fun showItem() {
             val parentHeight = (binding.cityImage.parent as View).height
-            val scale =
-                ((parentHeight - binding.cityName.height) / binding.cityImage.height).toFloat()
+            val scale = (parentHeight - binding.cityName.height) / binding.cityImage.height.toFloat()
             binding.cityImage.pivotX = binding.cityImage.width * 0.5f
             binding.cityImage.pivotY = 0f
             binding.cityImage.animate().scaleX(scale)
@@ -82,7 +76,9 @@ class ForecastAdapter(private val itemList: Collection<Forecast>) :
         fun hideItem() {
             binding.cityImage.setColorFilter(ContextCompat.getColor(binding.cityImage.context, R.color.grayIconTint))
             binding.cityName.visibility = View.INVISIBLE
-            binding.cityImage.animate().scaleX(1f).scaleY(1f)
+            binding.cityImage.animate()
+                .scaleX(1f)
+                .scaleY(1f)
                 .setDuration(200)
                 .start()
         }

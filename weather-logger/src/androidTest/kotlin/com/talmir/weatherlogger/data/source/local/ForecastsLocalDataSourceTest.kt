@@ -12,6 +12,8 @@ import com.talmir.weatherlogger.data.source.local.room.city_forecast_data.CityFo
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataDao
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 import com.talmir.weatherlogger.data.source.local.room.utils.AppDatabase
+import com.talmir.weatherlogger.helpers.Constants
+import java.util.Date
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.`is`
@@ -31,18 +33,18 @@ class ForecastsLocalDataSourceTest {
     private lateinit var cityForecastDataDao: CityForecastDataDao
 
     private val forecasts = listOf(
-        ForecastDataEntity(1L, "Clouds", 14, 762, 67, 28f, 32131132, 1231124, id = 1L), // data for Baku
-        ForecastDataEntity(1L, "Rain", 16, 762, 82, 36f, 32131132, 1231124, id = 2L),   // data for Baku
-        ForecastDataEntity(1L, "Sunny", 35, 762, 44, 14f, 32131132, 1231124, id = 3L),  // data for Baku
-        ForecastDataEntity(3L, "Windy", 15, 762, 67, 65f, 32131132, 1231124, id = 4L),  // data for Lenkaran
-        ForecastDataEntity(3L, "Storm", 9, 762, 67, 87f, 32131132, 1231124, id = 5L)    // data for Lenkaran
+        ForecastDataEntity(Constants.BAKU_CITY_ID, "Clouds", 14, 762, 67, 28f, 32131132, 1231124, Date(), id = 1L), // data for Baku
+        ForecastDataEntity(Constants.BAKU_CITY_ID, "Rain", 16, 762, 82, 36f, 32131132, 1231124, Date(), id = 2L),   // data for Baku
+        ForecastDataEntity(Constants.BAKU_CITY_ID, "Sunny", 35, 762, 44, 14f, 32131132, 1231124, Date(), id = 3L),  // data for Baku
+        ForecastDataEntity(Constants.LENKARAN_CITY_ID, "Windy", 15, 762, 67, 65f, 32131132, 1231124, Date(), id = 4L),  // data for Lenkaran
+        ForecastDataEntity(Constants.LENKARAN_CITY_ID, "Storm", 9, 762, 67, 87f, 32131132, 1231124, Date(), id = 5L)    // data for Lenkaran
     )
     private val cities = listOf(
-        CityEntity(1L, "BAKU"),
-        CityEntity(2L, "SUMGAIT"),
-        CityEntity(3L, "LENKARAN"),
-        CityEntity(4L, "SHAMAKHI"),
-        CityEntity(5L, "GOYCHAY")
+        CityEntity(Constants.BAKU_CITY_ID, "BAKU"),
+        CityEntity(Constants.SUMGAIT_CITY_ID, "SUMGAIT"),
+        CityEntity(Constants.LENKARAN_CITY_ID, "LENKARAN"),
+        CityEntity(Constants.SHAMAKHI_CITY_ID, "SHAMAKHI"),
+        CityEntity(Constants.GOYCHAY_CITY_ID, "GOYCHAY")
     )
     private val bakuCityForecastData = CityForecastData(cities[0], forecasts.subList(0, 3))
     private val lenkaranCityForecastData = CityForecastData(cities[2], forecasts.subList(3, 5))
@@ -67,8 +69,8 @@ class ForecastsLocalDataSourceTest {
             cityDao.saveData(cities)
             forecastDataDao.saveData(forecasts)
 
-            assertThat(cityForecastDataDao.getCityForecastData(1L), `is`(equalTo(bakuCityForecastData)))
-            assertThat(cityForecastDataDao.getCityForecastData(3L), `is`(equalTo(lenkaranCityForecastData)))
+            assertThat(cityForecastDataDao.getCityForecastData(Constants.BAKU_CITY_ID), `is`(equalTo(bakuCityForecastData)))
+            assertThat(cityForecastDataDao.getCityForecastData(Constants.LENKARAN_CITY_ID), `is`(equalTo(lenkaranCityForecastData)))
 
             assertThat(forecastDataDao.getForecastData(), `is`(equalTo(forecasts)))
         }

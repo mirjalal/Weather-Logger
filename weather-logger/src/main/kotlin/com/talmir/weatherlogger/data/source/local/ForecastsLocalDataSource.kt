@@ -18,23 +18,27 @@ class ForecastsLocalDataSource internal constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ForecastsDataSource {
 
-    override suspend fun getForecastData(): Result<List<Forecast>> = withContext(ioDispatcher) {
-        return@withContext try {
-            Result.Success(forecastDataDao.getCitiesLastForecastData().toForecast())
-        } catch (e: Exception) {
-            Result.Error(e)
+    override suspend fun getForecastData(): Result<List<Forecast>> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                Result.Success(forecastDataDao.getCitiesLastForecastData().toForecast())
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
         }
-    }
 
-    suspend fun getSingleCityForecastData(cityId: Long): Result<List<Forecast>> = withContext(ioDispatcher) {
-        return@withContext try {
-            Result.Success(cityForecastDataDao.getCityForecastData(cityId).toForecast())
-        } catch (e: Exception) {
-            Result.Error(e)
+    suspend fun getSingleCityForecastData(cityId: Long): Result<List<Forecast>> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                println(cityId)
+                Result.Success(cityForecastDataDao.getCityForecastData(cityId).toForecast())
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
         }
-    }
 
-    suspend fun saveForecastData(forecastData: List<ForecastDataEntity>) = withContext(ioDispatcher) {
-        forecastDataDao.saveData(forecastData)
-    }
+    suspend fun saveForecastData(forecastData: List<ForecastDataEntity>) =
+            withContext(ioDispatcher) {
+            forecastDataDao.saveData(forecastData)
+        }
 }

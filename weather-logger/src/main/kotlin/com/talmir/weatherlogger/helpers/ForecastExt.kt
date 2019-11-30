@@ -4,6 +4,8 @@ import com.talmir.weatherlogger.data.source.local.room.city_forecast_data.CityFo
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 import com.talmir.weatherlogger.data.source.remote.network.ApiModel
 import com.talmir.weatherlogger.helpers.weather.Forecast
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 @Suppress("unchecked_cast")
 inline fun <reified E> List<E>.toForecast() = when (E::class) {
@@ -19,7 +21,8 @@ inline fun <reified E> List<E>.toForecast() = when (E::class) {
                 it.weatherHumidity,
                 it.weatherWindSpeed,
                 it.sunrise,
-                it.sunset
+                it.sunset,
+                it.requestTime
             )
         }
     }
@@ -30,12 +33,13 @@ inline fun <reified E> List<E>.toForecast() = when (E::class) {
                 it.cityId.toLong().cityNameById(),
                 it.cityId.toLong().cityIconById(),
                 it.weather[0].main,
-                it.main.temp.toInt(),
+                it.main.temp.roundToInt(),
                 it.main.pressure,
                 it.main.humidity,
-                it.wind.speed.toFloat(),
-                it.sys.sunrise,
-                it.sys.sunset
+                round(it.wind.speed * 100) / 100,
+                it.sunEvents.sunrise,
+                it.sunEvents.sunset,
+                it.requestTime
             )
         }
     }

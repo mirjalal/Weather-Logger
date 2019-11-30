@@ -1,38 +1,68 @@
 package com.talmir.weatherlogger.data
 
+import com.talmir.weatherlogger.data.source.local.ForecastsLocalDataSource
+import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
+import com.talmir.weatherlogger.data.source.remote.ForecastsRemoteDataSource
 import com.talmir.weatherlogger.helpers.weather.Forecast
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Concrete implementation to load forecasts
- * from the data sources into a cache.
+ * Concrete implementation to load forecasts from the data sources into a cache.
  *
- * To simplify the sample, this repository
- * only uses the local data source only if
- * the remote data source fails. Remote is
- * the source of truth.
+ * To simplify the sample, this repository only uses the local data source only if
+ * the remote data source fails. Remote is the source of truth.
  */
 class ForecastsRepository(
-    private val tasksRemoteDataSource: ForecastsDataSource,
-    private val tasksLocalDataSource: ForecastsDataSource,
+    private val forecastsRemoteDataSource: ForecastsRemoteDataSource,
+    private val forecastsLocalDataSource: ForecastsLocalDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
 
-    suspend fun getForecastData(): Result<List<Forecast>> {
-        return withContext(ioDispatcher) {
-            val localForecastData = tasksLocalDataSource.getAllForecasts()
+    suspend fun getCityForecastData(cityId: Long) =
+        withContext(ioDispatcher) {
+            return@withContext forecastsLocalDataSource.getSingleCityForecastData(cityId)
+        }
 
-            if (localForecastData.succeeded)
-                localForecastData
-            else {
-                val remoteForecastData = tasksRemoteDataSource.getAllForecasts()
+    suspend fun getForecastData(): Result<List<Forecast>> =
+        withContext(ioDispatcher) {
+            return@withContext fetchDataFromRemoteOrLocal()
+        }
 
-                if (remoteForecastData.succeeded)
-                    remoteForecastData
-                else
-                    listOf()
+    private suspend fun fetchDataFromRemoteOrLocal(): Result<List<Forecast>> {
+        // remote data first
+        when (val remoteForecastData = forecastsRemoteDataSource.getForecastData()) {
+            is Result.Error -> println(remoteForecastData.exception)
+            is Result.Success -> {
+                refreshLocalDataSource(remoteForecastData.data)
+                return remoteForecastData
             }
+            else -> throw IllegalStateException()
+        }
+
+        val localForecastData = forecastsLocalDataSource.getForecastData()
+        if (localForecastData is Result.Success)
+            return localForecastData
+
+        return Result.Error(Exception("Error fetching data from remote and local"))
+    }
+
+    private suspend fun refreshLocalDataSource(data: List<Forecast>) {
+        val forecastEntityData = data.map {
+            ForecastDataEntity(
+                it.cityId,
+                it.weatherType,
+                it.temperature,
+                it.pressure,
+                it.humidity,
+                it.windSpeed,
+                it.sunrise,
+                it.sunset,
+                it.requestTime
+            )
+        }
+        withContext(ioDispatcher) {
+            forecastsLocalDataSource.saveForecastData(forecastEntityData)
         }
     }
 }

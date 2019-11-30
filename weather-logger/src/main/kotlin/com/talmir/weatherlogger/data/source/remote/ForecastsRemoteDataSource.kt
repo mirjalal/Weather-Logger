@@ -13,17 +13,18 @@ class ForecastsRemoteDataSource internal constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ForecastsDataSource {
 
-    override suspend fun getForecastData(): Result<List<Forecast>> = withContext(ioDispatcher) {
-        return@withContext try {
-            val networkRequest = forecastDataRetrieverService.getForecastData()
-            val data = networkRequest.body()?.list
+    override suspend fun getForecastData(): Result<List<Forecast>> =
+        withContext(ioDispatcher) {
+            return@withContext try {
+                val networkRequest = forecastDataRetrieverService.getForecastData()
+                val data = networkRequest.body()?.currentWeather
 
-            if (networkRequest.isSuccessful && data != null)
-                Result.Success(data.toForecast())
-            else
-                Result.Error(Error("Network request failed!"))
-        } catch (e: Exception) {
-            Result.Error(e)
+                if (networkRequest.isSuccessful && data != null)
+                    Result.Success(data.toForecast())
+                else
+                    Result.Error(Error("Network request failed!"))
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
         }
-    }
 }
