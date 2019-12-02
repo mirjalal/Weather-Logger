@@ -9,19 +9,19 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "weather-logger/build.gradle" }}
       - run:
           name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
       - run:
           name: Build debug APK and release APK
           command: |
-            ./gradlew :app:clean
-            ./gradlew :app:build
+            ./gradlew :weather-logger:clean
+            ./gradlew :weather-logger:build
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "weather-logger/build.gradle" }}
       - store_artifacts:
-          path: app/build/reports
+          path: weather-logger/build/reports
           destination: reports
