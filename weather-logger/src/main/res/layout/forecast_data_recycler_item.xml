@@ -3,28 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <pl.hypeapp.materialtimelineview.MaterialTimelineView
-        android:id="@+id/material_timeline_view"
+    <data>
+        <variable name="prettyDate" type="org.ocpsoft.prettytime.PrettyTime" />
+        <variable name="forecast" type="com.talmir.weatherlogger.helpers.weather.Forecast" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_orange_light"
-        app:timeline_top_radio_color="@android:color/white"
-        app:timeline_bottom_radio_color="@android:color/white"
-        app:timeline_line_color="@android:color/white"
-        app:timeline_type="item"
-        app:timeline_position="first"
-        app:timeline_margin_start="32dp"
-        app:timeline_radio_outline_radius="20"
-        app:timeline_radio_radius="12">
-
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="8dp"-->
-<!--        app:cardCornerRadius="3dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
+        android:layout_margin="8dp"
+        app:cardCornerRadius="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,18 +26,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/measured"
-                app:layout_constraintEnd_toStartOf="@+id/weather_measure_time"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/weather_measure_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:text="@{@string/measured(prettyDate.format(forecast.requestTime))}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Measure: 2 mins ago" />
 
             <ImageView
                 android:id="@+id/termometer"
@@ -56,35 +40,18 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_measured"
-                tools:srcCompat="@drawable/ic_termometer" />
+                app:srcCompat="@drawable/ic_termometer" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/temperature"
+                android:text="@{@string/temperature(forecast.temperature)}"
                 app:layout_constraintBottom_toBottomOf="@+id/termometer"
                 app:layout_constraintStart_toEndOf="@+id/termometer"
-                app:layout_constraintTop_toTopOf="@+id/termometer" />
-
-            <TextView
-                android:id="@+id/weather_temperature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/termometer"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
-                app:layout_constraintTop_toTopOf="@+id/termometer" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/celsius"
-                app:layout_constraintBottom_toBottomOf="@+id/termometer"
-                app:layout_constraintStart_toEndOf="@+id/weather_temperature"
                 app:layout_constraintTop_toTopOf="@+id/termometer"
-                app:layout_constraintVertical_bias="0.48" />
+                tools:text="Temperature: 27 °C" />
 
             <ImageView
                 android:id="@+id/barometer"
@@ -94,73 +61,39 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/termometer"
-                tools:srcCompat="@drawable/ic_barometer" />
+                app:srcCompat="@drawable/ic_barometer" />
 
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/pressure"
+                android:text="@{@string/pressure(forecast.pressure)}"
                 app:layout_constraintBottom_toBottomOf="@+id/barometer"
                 app:layout_constraintStart_toEndOf="@+id/barometer"
-                app:layout_constraintTop_toTopOf="@+id/barometer" />
-
-            <TextView
-                android:id="@+id/weather_pressure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/barometer"
-                app:layout_constraintStart_toEndOf="@+id/textView12"
-                app:layout_constraintTop_toTopOf="@+id/barometer" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hpa"
-                app:layout_constraintBottom_toBottomOf="@+id/barometer"
-                app:layout_constraintStart_toEndOf="@+id/weather_pressure"
                 app:layout_constraintTop_toTopOf="@+id/barometer"
-                app:layout_constraintVertical_bias="0.52" />
+                tools:text="Pressure: 765 hPa" />
 
             <ImageView
-                android:id="@+id/psychrometer"
+                android:id="@+id/hygrometer"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/barometer"
-                tools:srcCompat="@drawable/ic_psychrometer" />
+                app:srcCompat="@drawable/ic_hygrometer" />
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/humidity"
-                app:layout_constraintBottom_toBottomOf="@+id/psychrometer"
-                app:layout_constraintStart_toEndOf="@+id/psychrometer"
-                app:layout_constraintTop_toTopOf="@+id/psychrometer" />
-
-            <TextView
-                android:id="@+id/weather_humidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/psychrometer"
-                app:layout_constraintStart_toEndOf="@+id/textView13"
-                app:layout_constraintTop_toTopOf="@+id/psychrometer" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/percent"
-                app:layout_constraintBottom_toBottomOf="@+id/psychrometer"
-                app:layout_constraintStart_toEndOf="@+id/weather_humidity"
-                app:layout_constraintTop_toTopOf="@+id/psychrometer"
-                app:layout_constraintVertical_bias="0.52" />
+                android:text="@{@string/humidity(forecast.humidity)}"
+                app:layout_constraintBottom_toBottomOf="@+id/hygrometer"
+                app:layout_constraintStart_toEndOf="@+id/hygrometer"
+                app:layout_constraintTop_toTopOf="@+id/hygrometer"
+                tools:text="Humidity: 15 %" />
 
             <ImageView
                 android:id="@+id/anemometer"
@@ -171,36 +104,19 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/psychrometer"
-                tools:srcCompat="@drawable/ic_wind_speed" />
+                app:layout_constraintTop_toBottomOf="@+id/hygrometer"
+                app:srcCompat="@drawable/ic_wind_speed" />
 
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/wind"
+                android:text="@{@string/wind(forecast.windSpeed)}"
                 app:layout_constraintBottom_toBottomOf="@+id/anemometer"
                 app:layout_constraintStart_toEndOf="@+id/anemometer"
-                app:layout_constraintTop_toTopOf="@+id/anemometer" />
-
-            <TextView
-                android:id="@+id/weather_wind_speed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/anemometer"
-                app:layout_constraintStart_toEndOf="@+id/textView14"
-                app:layout_constraintTop_toTopOf="@+id/anemometer" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/meters_per_sec"
-                app:layout_constraintBottom_toBottomOf="@+id/anemometer"
-                app:layout_constraintStart_toEndOf="@+id/weather_wind_speed"
                 app:layout_constraintTop_toTopOf="@+id/anemometer"
-                app:layout_constraintVertical_bias="0.52" />
+                tools:text="Wind: 80 m/s" />
 
             <ImageView
                 android:id="@+id/weather_icon"
@@ -211,9 +127,7 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_measured"
-                app:srcCompat="@drawable/weather_clear" />
+                app:layout_constraintTop_toBottomOf="@+id/text_measured" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    </androidx.cardview.widget.CardView>-->
-    </pl.hypeapp.materialtimelineview.MaterialTimelineView>
+    </androidx.cardview.widget.CardView>
 </layout>

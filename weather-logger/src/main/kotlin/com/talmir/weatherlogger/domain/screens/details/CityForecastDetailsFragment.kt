@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import com.talmir.weatherlogger.R
 import com.talmir.weatherlogger.databinding.FragmentCityForecastDetailsBinding
 import com.talmir.weatherlogger.helpers.Fragment
@@ -37,13 +37,14 @@ class CityForecastDetailsFragment : Fragment<CityForecastDetailsViewModel>() {
                 )
             }
             title = "Forecast data for ${cityId.cityNameById()}"
+            setTitleTextColor(resources.getColor(R.color.white, null))
         }
 
         viewModel.cityForecastDetails.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 println("No data for ${cityId.cityNameById()}")
             } else {
-                val adapter = CityForecastDetailsAdapter(it)
+                val adapter = CityForecastDetailsAdapter(it.reversed())
                 binding.cityForecastDataRecycler.adapter = adapter
             }
         })

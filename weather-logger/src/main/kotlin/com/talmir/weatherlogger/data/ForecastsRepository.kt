@@ -32,17 +32,17 @@ class ForecastsRepository(
     private suspend fun fetchDataFromRemoteOrLocal(): Result<List<Forecast>> {
         // remote data first
         when (val remoteForecastData = forecastsRemoteDataSource.getForecastData()) {
-            is Result.Error -> println(remoteForecastData.exception)
+            is Result.Error -> {
+                val localForecastData = forecastsLocalDataSource.getForecastData()
+                if (localForecastData is Result.Success)
+                    return localForecastData
+            }
             is Result.Success -> {
                 refreshLocalDataSource(remoteForecastData.data)
                 return remoteForecastData
             }
             else -> throw IllegalStateException()
         }
-
-        val localForecastData = forecastsLocalDataSource.getForecastData()
-        if (localForecastData is Result.Success)
-            return localForecastData
 
         return Result.Error(Exception("Error fetching data from remote and local"))
     }

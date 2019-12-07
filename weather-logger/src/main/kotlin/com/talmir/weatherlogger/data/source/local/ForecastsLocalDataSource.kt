@@ -21,7 +21,9 @@ class ForecastsLocalDataSource internal constructor(
     override suspend fun getForecastData(): Result<List<Forecast>> =
         withContext(ioDispatcher) {
             return@withContext try {
-                Result.Success(forecastDataDao.getCitiesLastForecastData().toForecast())
+                val localdata = forecastDataDao.getCitiesLastForecastData().toForecast().sortedBy { it.cityId }
+                println(localdata)
+                Result.Success(localdata)
             } catch (e: Exception) {
                 Result.Error(e)
             }

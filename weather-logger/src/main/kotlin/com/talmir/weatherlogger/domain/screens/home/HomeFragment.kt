@@ -30,6 +30,11 @@ class HomeFragment : com.talmir.weatherlogger.helpers.Fragment<HomeViewModel>(),
         binding = FragmentHomeBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.forecastData.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty())
                 println("no data")
@@ -38,8 +43,6 @@ class HomeFragment : com.talmir.weatherlogger.helpers.Fragment<HomeViewModel>(),
                 initializeView()
             }
         })
-
-        return binding.root
     }
 
     private fun initializeView() {

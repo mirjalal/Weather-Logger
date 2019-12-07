@@ -133,10 +133,11 @@ class ForecastView : LinearLayout {
                 WeatherTypes.ATMOSPHERE -> colors(R.array.gradientAtmosphere)
                 WeatherTypes.CLEAR -> colors(R.array.gradientClear)
                 WeatherTypes.CLOUDS -> colors(R.array.gradientClouds)
+                WeatherTypes.MIST -> colors(R.array.gradientAtmosphere)
                 else -> {
                     println(weatherType)
                     colors(R.array.gradientClouds)
-                    //throw IllegalArgumentException()
+//                    throw IllegalArgumentException()
                 }
             }
         }

@@ -1,6 +1,8 @@
 package com.talmir.weatherlogger.helpers
 
 import com.talmir.weatherlogger.R
+import com.talmir.weatherlogger.data.source.local.room.cities.CityEntity
+import com.talmir.weatherlogger.data.source.local.room.city_forecast_data.CityForecastData
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 import com.talmir.weatherlogger.data.source.remote.network.ApiModel
 import com.talmir.weatherlogger.helpers.weather.Forecast
@@ -36,7 +38,7 @@ class ForecastExtKtTest {
     }
 
     @Test
-    fun toForecast_weatherList_returnsForecastList() {
+    fun toForecast_apiModelWeatherList_returnsForecastList() {
         val requestTime = Date()
 
         val apiModelWeatherList = listOf(
@@ -91,5 +93,29 @@ class ForecastExtKtTest {
         )
 
         assertThat(apiModelWeatherList.toForecast(), `is`(equalTo(forecastList)))
+    }
+
+    @Test
+    fun toForecast_cityForecastData_returnsForecastList() {
+        val requestTime = Date()
+        val city = CityEntity(Constants.BAKU_CITY_ID, "BAKU")
+        val forecastEntityList = listOf(
+            ForecastDataEntity(Constants.BAKU_CITY_ID, "Clouds", 14, 762, 67, 28f, 32131132, 1231124, requestTime),
+            ForecastDataEntity(Constants.BAKU_CITY_ID, "Rain", 16, 762, 82, 36f, 32131132, 1231124, requestTime),
+            ForecastDataEntity(Constants.BAKU_CITY_ID, "Sunny", 35, 762, 44, 14f, 32131132, 1231124, requestTime),
+            ForecastDataEntity(Constants.BAKU_CITY_ID, "Windy", 15, 762, 67, 65f, 32131132, 1231124, requestTime),
+            ForecastDataEntity(Constants.BAKU_CITY_ID, "Storm", 9, 762, 67, 87f, 32131132, 1231124, requestTime)
+        )
+        val cityForecastData = CityForecastData(city, forecastEntityList)
+
+        val forecastList = listOf(
+            Forecast(Constants.BAKU_CITY_ID, "Baku", R.drawable.baku_maiden_tower, "Clouds", 14, 762, 67, 28f, 32131132, 1231124, requestTime),
+            Forecast(Constants.BAKU_CITY_ID, "Baku", R.drawable.baku_maiden_tower, "Rain", 16, 762, 82, 36f, 32131132, 1231124, requestTime),
+            Forecast(Constants.BAKU_CITY_ID, "Baku", R.drawable.baku_maiden_tower, "Sunny", 35, 762, 44, 14f, 32131132, 1231124, requestTime),
+            Forecast(Constants.BAKU_CITY_ID, "Baku", R.drawable.baku_maiden_tower, "Windy", 15, 762, 67, 65f, 32131132, 1231124, requestTime),
+            Forecast(Constants.BAKU_CITY_ID, "Baku", R.drawable.baku_maiden_tower, "Storm", 9, 762, 67, 87f, 32131132, 1231124, requestTime)
+        )
+
+        assertThat(cityForecastData.toForecast(), `is`(forecastList))
     }
 }
