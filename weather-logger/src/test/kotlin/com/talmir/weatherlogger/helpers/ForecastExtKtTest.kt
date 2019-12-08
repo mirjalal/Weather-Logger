@@ -47,7 +47,7 @@ class ForecastExtKtTest {
                 listOf(ApiModel.WeatherList.Weather("", "", 1, "Clouds")),
                 ApiModel.WeatherList.Wind(28.0f),
                 ApiModel.WeatherList.SunEvents(32131132, 1231124),
-                1,
+                587084,
                 requestTime
             ),
             ApiModel.WeatherList(
@@ -55,7 +55,7 @@ class ForecastExtKtTest {
                 listOf(ApiModel.WeatherList.Weather("", "", 1, "Rain")),
                 ApiModel.WeatherList.Wind(36.0f),
                 ApiModel.WeatherList.SunEvents(32131132, 1231124),
-                2,
+                584923,
                 requestTime
             ),
             ApiModel.WeatherList(
@@ -63,7 +63,7 @@ class ForecastExtKtTest {
                 listOf(ApiModel.WeatherList.Weather("", "", 1, "Sunny")),
                 ApiModel.WeatherList.Wind(14.0f),
                 ApiModel.WeatherList.SunEvents(32131132, 1231124),
-                3,
+                147613,
                 requestTime
             ),
             ApiModel.WeatherList(
@@ -71,7 +71,7 @@ class ForecastExtKtTest {
                 listOf(ApiModel.WeatherList.Weather("", "", 1, "Windy")),
                 ApiModel.WeatherList.Wind(65.0f),
                 ApiModel.WeatherList.SunEvents(32131132, 1231124),
-                4,
+                585156,
                 requestTime
             ),
             ApiModel.WeatherList(
@@ -79,7 +79,7 @@ class ForecastExtKtTest {
                 listOf(ApiModel.WeatherList.Weather("", "", 1, "Storm")),
                 ApiModel.WeatherList.Wind(87.0f),
                 ApiModel.WeatherList.SunEvents(32131132, 1231124),
-                5,
+                586482,
                 requestTime
             )
         )
