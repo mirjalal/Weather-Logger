@@ -1,6 +1,7 @@
 package com.talmir.weatherlogger.data.source.local.room.utils
 
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.util.Date
