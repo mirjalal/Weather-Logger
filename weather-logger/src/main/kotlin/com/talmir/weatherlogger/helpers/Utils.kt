@@ -29,15 +29,26 @@ fun Long.cityIconById() =
         else -> com.talmir.weatherlogger.R.drawable.baku_maiden_tower
     }
 
-fun String.weatherToIcon() =
+fun Int.weatherName() =
     when (this) {
-        WeatherTypes.THUNDERSTORM -> com.talmir.weatherlogger.R.drawable.weather_thunderstorm
-        WeatherTypes.DRIZZLE -> com.talmir.weatherlogger.R.drawable.weather_drizzle
-        WeatherTypes.RAIN -> com.talmir.weatherlogger.R.drawable.weather_rain
-        WeatherTypes.SNOW -> com.talmir.weatherlogger.R.drawable.weather_snow
-        WeatherTypes.ATMOSPHERE -> com.talmir.weatherlogger.R.drawable.weather_atmosphere
-        WeatherTypes.CLEAR -> com.talmir.weatherlogger.R.drawable.weather_clear
-        WeatherTypes.CLOUDS -> com.talmir.weatherlogger.R.drawable.weather_clouds
-        WeatherTypes.MIST -> com.talmir.weatherlogger.R.drawable.weather_mist
+        in 200..232 -> WeatherTypes.THUNDERSTORM
+        in 300..321 -> WeatherTypes.DRIZZLE
+        in 500..531 -> WeatherTypes.RAIN
+        in 600..622 -> WeatherTypes.SNOW
+        in 700..781 -> WeatherTypes.ATMOSPHERE
+        800 -> WeatherTypes.CLEAR
+        in 801..804 -> WeatherTypes.CLOUDS
+        else -> throw IllegalStateException()
+    }
+
+fun Int.weatherToIcon() =
+    when (this) {
+        in 200..232 -> com.talmir.weatherlogger.R.drawable.weather_thunderstorm
+        in 300..321 -> com.talmir.weatherlogger.R.drawable.weather_drizzle
+        in 500..531 -> com.talmir.weatherlogger.R.drawable.weather_rain
+        in 600..622 -> com.talmir.weatherlogger.R.drawable.weather_snow
+        in 700..781 -> com.talmir.weatherlogger.R.drawable.weather_atmosphere
+        800 -> com.talmir.weatherlogger.R.drawable.weather_clear
+        in 801..804 -> com.talmir.weatherlogger.R.drawable.weather_clouds
         else -> throw IllegalArgumentException()
     }

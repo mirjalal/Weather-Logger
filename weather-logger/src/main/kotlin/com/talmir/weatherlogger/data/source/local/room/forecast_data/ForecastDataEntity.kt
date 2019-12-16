@@ -11,7 +11,7 @@ import java.util.Date
 @TypeConverters(DateConverter::class)
 data class ForecastDataEntity(
     @ColumnInfo(name = "city_id") val cityId: Long,
-    @ColumnInfo(name = "type") val weatherName: String, // cloudy, clear sky etc
+    @ColumnInfo(name = "type") val weatherCode: Int, // cloudy, clear sky etc
     @ColumnInfo(name = "temperature") val weatherTemperature: Int, // in Celsius
     @ColumnInfo(name = "pressure") val weatherPressure: Int, // mmHg; 1 hPa to mmHg = 0.75006 mmHg
     @ColumnInfo(name = "humidity") val weatherHumidity: Int, // %

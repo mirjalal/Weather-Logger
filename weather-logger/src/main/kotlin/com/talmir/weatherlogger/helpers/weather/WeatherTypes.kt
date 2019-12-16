@@ -1,6 +1,5 @@
 package com.talmir.weatherlogger.helpers.weather
 
-// TODO: rewrite this section
 object WeatherTypes {
     // https://openweathermap.org/weather-conditions
     const val THUNDERSTORM = "Thunderstorm"
@@ -10,5 +9,4 @@ object WeatherTypes {
     const val ATMOSPHERE = "Atmosphere"
     const val CLEAR = "Clear"
     const val CLOUDS = "Clouds"
-    const val MIST = "Mist"
 }

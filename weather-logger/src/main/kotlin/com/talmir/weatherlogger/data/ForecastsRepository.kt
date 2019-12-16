@@ -41,28 +41,31 @@ class ForecastsRepository(
                 refreshLocalDataSource(remoteForecastData.data)
                 return remoteForecastData
             }
-            else -> throw IllegalStateException()
         }
 
         return Result.Error(Exception("Error fetching data from remote and local"))
     }
 
     private suspend fun refreshLocalDataSource(data: List<Forecast>) {
-        val forecastEntityData = data.map {
-            ForecastDataEntity(
-                it.cityId,
-                it.weatherType,
-                it.temperature,
-                it.pressure,
-                it.humidity,
-                it.windSpeed,
-                it.sunrise,
-                it.sunset,
-                it.requestTime
-            )
-        }
-        withContext(ioDispatcher) {
-            forecastsLocalDataSource.saveForecastData(forecastEntityData)
+        try {
+            val forecastEntityData = data.map {
+                ForecastDataEntity(
+                    it.cityId,
+                    it.weatherType,
+                    it.temperature,
+                    it.pressure,
+                    it.humidity,
+                    it.windSpeed,
+                    it.sunrise,
+                    it.sunset,
+                    it.requestTime
+                )
+            }
+            withContext(ioDispatcher) {
+                forecastsLocalDataSource.saveForecastData(forecastEntityData)
+            }
+        } catch (e: Exception) {
+            println(e)
         }
     }
 }

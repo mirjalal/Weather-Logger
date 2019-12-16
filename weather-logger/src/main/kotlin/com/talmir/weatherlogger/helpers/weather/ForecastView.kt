@@ -17,6 +17,8 @@ import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.annotation.RequiresApi
 import com.talmir.weatherlogger.R
+import com.talmir.weatherlogger.helpers.weatherName
+import dev.jorgecastillo.androidcolorx.library.darken
 import java.util.Locale
 
 class ForecastView : LinearLayout {
@@ -79,7 +81,7 @@ class ForecastView : LinearLayout {
         now = System.currentTimeMillis()
         if (width != 0 && height != 0)
             initGradient()
-        weatherDescription.text = weatherType
+        weatherDescription.text = weatherType.weatherName()
         weatherTemperature.text = String.format(Locale.ROOT, "%d", forecast.temperature)
         invalidate()
         weatherImage.animate()
@@ -107,39 +109,22 @@ class ForecastView : LinearLayout {
             (evaluator.evaluate(fraction, startColors[2], endColors[2]) as Int)
         )
 
-    private fun weatherToGradient(weatherType: String) =
-        if (now in (sunset + 1) until sunrise) { // darken colors
-//                        switch (weatherType) {
-//                            case PERIODIC_CLOUDS:
-//                                return colors(R.array.gradientPeriodicClouds);
-//                            case CLOUDY:
-//                                return colors(R.array.gradientCloudy);
-//                            case MOSTLY_CLOUDY:
-//                                return colors(R.array.gradientMostlyCloudy);
-//                            case PARTLY_CLOUDY:
-//                                return colors(R.array.gradientPartlyCloudy);
-//                            case Clear:
+    private fun weatherToGradient(weatherType: Int) =
+        if (now in (sunset + 1) until sunrise) // dark colors
+            weatherType.weatherGradientColors().map { it.darken(50) }.toIntArray()
+        else // light colors
+            weatherType.weatherGradientColors()
 
-            colors(R.array.gradientClear)
-            //                default:
-            //                    throw new IllegalArgumentException();
-            //            }
-        } else { // lighten colors
-            when (weatherType) {
-                WeatherTypes.THUNDERSTORM -> colors(R.array.gradientThunderstorm)
-                WeatherTypes.DRIZZLE -> colors(R.array.gradientDrizzle)
-                WeatherTypes.RAIN -> colors(R.array.gradientRain)
-                WeatherTypes.SNOW -> colors(R.array.gradientSnow)
-                WeatherTypes.ATMOSPHERE -> colors(R.array.gradientAtmosphere)
-                WeatherTypes.CLEAR -> colors(R.array.gradientClear)
-                WeatherTypes.CLOUDS -> colors(R.array.gradientClouds)
-                WeatherTypes.MIST -> colors(R.array.gradientAtmosphere)
-                else -> {
-                    println(weatherType)
-                    colors(R.array.gradientClouds)
-//                    throw IllegalArgumentException()
-                }
-            }
+    private fun Int.weatherGradientColors() =
+        when (this) {
+            in 200..232 -> colors(R.array.gradientThunderstorm)
+            in 300..321 -> colors(R.array.gradientDrizzle)
+            in 500..531 -> colors(R.array.gradientRain)
+            in 600..622 -> colors(R.array.gradientSnow)
+            in 700..781 -> colors(R.array.gradientAtmosphere)
+            800 ->         colors(R.array.gradientClear)
+            in 801..804 -> colors(R.array.gradientClouds)
+            else -> throw IllegalArgumentException()
         }
 
     private fun colors(@ArrayRes res: Int) =

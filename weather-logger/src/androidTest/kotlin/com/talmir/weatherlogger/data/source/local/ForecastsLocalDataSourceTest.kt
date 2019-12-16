@@ -33,11 +33,11 @@ class ForecastsLocalDataSourceTest {
     private lateinit var cityForecastDataDao: CityForecastDataDao
 
     private val forecasts = listOf(
-        ForecastDataEntity(Constants.BAKU_CITY_ID, "Clouds", 14, 762, 67, 28f, 32131132, 1231124, Date(), id = 1L), // data for Baku
-        ForecastDataEntity(Constants.BAKU_CITY_ID, "Rain", 16, 762, 82, 36f, 32131132, 1231124, Date(), id = 2L),   // data for Baku
-        ForecastDataEntity(Constants.BAKU_CITY_ID, "Sunny", 35, 762, 44, 14f, 32131132, 1231124, Date(), id = 3L),  // data for Baku
-        ForecastDataEntity(Constants.LENKARAN_CITY_ID, "Windy", 15, 762, 67, 65f, 32131132, 1231124, Date(), id = 4L),  // data for Lenkaran
-        ForecastDataEntity(Constants.LENKARAN_CITY_ID, "Storm", 9, 762, 67, 87f, 32131132, 1231124, Date(), id = 5L)    // data for Lenkaran
+        ForecastDataEntity(Constants.BAKU_CITY_ID, 802, 14, 762, 67, 28f, 32131132, 1231124, Date(), id = 1L), // data for Baku
+        ForecastDataEntity(Constants.BAKU_CITY_ID, 511, 16, 762, 82, 36f, 32131132, 1231124, Date(), id = 2L),   // data for Baku
+        ForecastDataEntity(Constants.BAKU_CITY_ID, 622, 35, 762, 44, 14f, 32131132, 1231124, Date(), id = 3L),  // data for Baku
+        ForecastDataEntity(Constants.LENKARAN_CITY_ID, 701, 15, 762, 67, 65f, 32131132, 1231124, Date(), id = 4L),  // data for Lenkaran
+        ForecastDataEntity(Constants.LENKARAN_CITY_ID, 200, 9, 762, 67, 87f, 32131132, 1231124, Date(), id = 5L)    // data for Lenkaran
     )
     private val cities = listOf(
         CityEntity(Constants.BAKU_CITY_ID, "BAKU"),

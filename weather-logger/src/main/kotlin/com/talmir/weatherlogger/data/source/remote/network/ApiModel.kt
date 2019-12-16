@@ -28,7 +28,7 @@ data class ApiModel(
         data class SunEvents(val sunrise: Int, val sunset: Int)
 
         @JsonClass(generateAdapter = true)
-        data class Weather(val description: String, val icon: String, val id: Int, val main: String)
+        data class Weather(val id: Int)
 
         @JsonClass(generateAdapter = true)
         data class Wind(val speed: Float)

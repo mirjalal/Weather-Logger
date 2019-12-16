@@ -2,7 +2,7 @@ package com.talmir.weatherlogger.helpers
 
 object Constants {
     private const val API_URL = "https://api.openweathermap.org/data/2.5/"
-    private const val API_KEY = "a3f5cd4926414edbf39ba29587ff39ef"
+    private const val API_KEY = "d64bc1686044c643b68f9573b2a5cea2"
 
     const val BAKU_CITY_ID = 1L
     const val SUMGAIT_CITY_ID = 2L
@@ -17,18 +17,18 @@ object Constants {
         GOYCHAY_CITY_ID
     )
 
+    private const val BAKU = 587084L
+    private const val SUMGAIT = 584923L
+    private const val LENKARAN = 147613L
+    private const val SHAMAKHI = 585156L
+    private const val GOYCHAY = 586482L
+
     fun buildApiUrl() = StringBuilder()
-        .append(API_URL)
-        .append("group?id=")
-        .append(BAKU_CITY_ID)
-        .append(',')
-        .append(SUMGAIT_CITY_ID)
-        .append(',')
-        .append(LENKARAN_CITY_ID)
-        .append(',')
-        .append(SHAMAKHI_CITY_ID)
-        .append(',')
-        .append(GOYCHAY_CITY_ID)
-        .append("&units=metric&appid=")
+        .append(API_URL).append("group?id=")
+        .append(BAKU).append(',')
+        .append(SUMGAIT).append(',')
+        .append(LENKARAN).append(',')
+        .append(SHAMAKHI).append(',')
+        .append(GOYCHAY).append("&units=metric&appid=")
         .append(API_KEY).toString()
 }

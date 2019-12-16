@@ -6,7 +6,7 @@ data class Forecast(
     val cityId: Long,
     val cityName: String,
     val cityIcon: Int,
-    val weatherType: String,
+    val weatherType: Int,
     val temperature: Int,
     val pressure: Int,
     val humidity: Int,

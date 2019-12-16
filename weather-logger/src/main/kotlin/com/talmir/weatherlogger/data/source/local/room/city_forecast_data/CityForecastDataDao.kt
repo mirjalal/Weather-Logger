@@ -7,6 +7,6 @@ import androidx.room.Transaction
 @Dao
 abstract class CityForecastDataDao {
     @Transaction
-    @Query("SELECT * FROM cities WHERE city_id = :cityId;")
+    @Query("SELECT * FROM cities WHERE city_id = :cityId ORDER BY city_id;")
     abstract suspend fun getCityForecastData(cityId: Long): CityForecastData
 }

@@ -2,7 +2,6 @@ package com.talmir.weatherlogger.domain.screens.details
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.talmir.weatherlogger.databinding.ForecastDataRecyclerItemBinding
 import com.talmir.weatherlogger.helpers.weather.Forecast
