@@ -23,7 +23,7 @@ jobs:
           command: |
             ./gradlew test
       - run:
-          name: Run Unit Tests
+          name: Run Instrumented Tests
           command: |
             ./gradlew connectedAndroidTest
       - save_cache:
