@@ -18,6 +18,10 @@ jobs:
           command: |
             ./gradlew :weather-logger:clean
             ./gradlew :weather-logger:build
+      - run:
+          name: Run Unit Tests
+          command: |
+            ./gradlew test
       - save_cache:
           paths:
             - ~/.gradle
