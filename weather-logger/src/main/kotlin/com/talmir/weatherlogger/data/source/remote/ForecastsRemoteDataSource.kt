@@ -2,6 +2,7 @@ package com.talmir.weatherlogger.data.source.remote
 
 import com.talmir.weatherlogger.data.ForecastsDataSource
 import com.talmir.weatherlogger.data.Result
+import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 import com.talmir.weatherlogger.data.source.remote.network.ForecastRemoteDataRetrieverApi.forecastDataRetrieverService
 import com.talmir.weatherlogger.helpers.toForecast
 import com.talmir.weatherlogger.helpers.weather.Forecast
@@ -27,4 +28,10 @@ class ForecastsRemoteDataSource internal constructor(
                 Result.Error(e)
             }
         }
+
+    override suspend fun saveForecastData(forecastData: List<ForecastDataEntity>) =
+        throw NotImplementedError("This method should not to be implemented for remote data source!")
+
+    override suspend fun getSingleCityForecastData(cityId: Long) =
+        throw NotImplementedError("This method should not to be implemented for remote data source!")
 }

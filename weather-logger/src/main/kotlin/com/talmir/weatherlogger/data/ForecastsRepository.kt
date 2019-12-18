@@ -1,8 +1,6 @@
 package com.talmir.weatherlogger.data
 
-import com.talmir.weatherlogger.data.source.local.ForecastsLocalDataSource
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
-import com.talmir.weatherlogger.data.source.remote.ForecastsRemoteDataSource
 import com.talmir.weatherlogger.helpers.weather.Forecast
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -15,18 +13,23 @@ import kotlinx.coroutines.withContext
  * the remote data source fails. Remote is the source of truth.
  */
 class ForecastsRepository(
-    private val forecastsRemoteDataSource: ForecastsRemoteDataSource,
-    private val forecastsLocalDataSource: ForecastsLocalDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    private val forecastsRemoteDataSource: ForecastsDataSource,
+    private val forecastsLocalDataSource: ForecastsDataSource,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) : IForecastsRepository {
 
-    suspend fun getCityForecastData(cityId: Long) =
+    override suspend fun getCityForecastData(cityId: Long) =
         withContext(ioDispatcher) {
             return@withContext forecastsLocalDataSource.getSingleCityForecastData(cityId)
         }
 
-    suspend fun getForecastData(): Result<List<Forecast>> =
+    override suspend fun getForecastData(): Result<List<Forecast>> =
         withContext(ioDispatcher) {
             return@withContext fetchDataFromRemoteOrLocal()
+        }
+
+    override suspend fun saveForecastData(forecastData: List<ForecastDataEntity>) =
+        withContext(ioDispatcher) {
+            return@withContext forecastsLocalDataSource.saveForecastData(forecastData)
         }
 
     private suspend fun fetchDataFromRemoteOrLocal(): Result<List<Forecast>> {

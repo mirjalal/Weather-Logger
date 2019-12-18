@@ -29,17 +29,33 @@ fun Long.cityIconById() =
         else -> com.talmir.weatherlogger.R.drawable.baku_maiden_tower
     }
 
-fun Int.weatherName() =
-    when (this) {
+fun Int.weatherName(): String {
+    fun Int.atmosphereWeatherType() =
+        when (this) {
+            701 -> WeatherTypes.MIST
+            711 -> WeatherTypes.SMOKE
+            721 -> WeatherTypes.HAZE
+            731 -> WeatherTypes.DUST
+            741 -> WeatherTypes.FOG
+            751 -> WeatherTypes.SAND
+            761 -> WeatherTypes.DUST
+            762 -> WeatherTypes.ASH
+            771 -> WeatherTypes.SQUALL
+            781 -> WeatherTypes.TORNADO
+            else -> "Unknown weather"
+        }
+
+    return when (this) {
         in 200..232 -> WeatherTypes.THUNDERSTORM
         in 300..321 -> WeatherTypes.DRIZZLE
         in 500..531 -> WeatherTypes.RAIN
         in 600..622 -> WeatherTypes.SNOW
-        in 700..781 -> WeatherTypes.ATMOSPHERE
+        in 700..781 -> atmosphereWeatherType()
         800 -> WeatherTypes.CLEAR
         in 801..804 -> WeatherTypes.CLOUDS
-        else -> throw IllegalStateException()
+        else -> "Unknown weather"
     }
+}
 
 fun Int.weatherToIcon() =
     when (this) {

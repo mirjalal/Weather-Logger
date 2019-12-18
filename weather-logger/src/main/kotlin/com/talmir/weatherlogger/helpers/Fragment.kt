@@ -3,7 +3,7 @@ package com.talmir.weatherlogger.helpers
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.talmir.weatherlogger.WeatherLoggerApp
-import com.talmir.weatherlogger.data.ForecastsRepository
+import com.talmir.weatherlogger.data.IForecastsRepository
 
 abstract class Fragment<ViewModel : androidx.lifecycle.ViewModel> : androidx.fragment.app.Fragment() {
     /**
@@ -18,7 +18,7 @@ abstract class Fragment<ViewModel : androidx.lifecycle.ViewModel> : androidx.fra
 
     open val cityId: Long = 0L
 
-    private lateinit var repository: ForecastsRepository
+    private lateinit var repository: IForecastsRepository
 
     lateinit var viewModel: ViewModel
         private set

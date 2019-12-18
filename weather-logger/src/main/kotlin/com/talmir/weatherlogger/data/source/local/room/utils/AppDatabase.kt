@@ -1,6 +1,6 @@
 package com.talmir.weatherlogger.data.source.local.room.utils
 
-import android.app.Application
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -54,11 +54,11 @@ abstract class AppDatabase : RoomDatabase() {
          * it once by using synchronized. Only one thread may enter a synchronized block at a
          * time.
          *
-         * @param application used to get access to the filesystem.
+         * @param context used to get access to the filesystem.
          */
-        fun getInstance(application: Application): AppDatabase =
+        fun getInstance(context: Context): AppDatabase =
             DATABASE_INSTANCE ?: synchronized(this) {
-                DATABASE_INSTANCE ?: buildDatabase(application).also { DATABASE_INSTANCE = it }
+                DATABASE_INSTANCE ?: buildDatabase(context).also { DATABASE_INSTANCE = it }
             }
 
         /**
@@ -76,10 +76,10 @@ abstract class AppDatabase : RoomDatabase() {
          * To learn more about Singleton read the wikipedia article:
          * https://en.wikipedia.org/wiki/Singleton_pattern
          *
-         * @param application used to get access to the filesystem.
+         * @param context used to get access to the filesystem.
          */
-        private fun buildDatabase(application: Application) =
-            Room.databaseBuilder(application.applicationContext,
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(context,
                 AppDatabase::class.java,
                     "weather_logger_db"
                 )
@@ -89,7 +89,7 @@ abstract class AppDatabase : RoomDatabase() {
                         super.onCreate(db)
                         // insert the data on the IO Thread
                         Executors.newSingleThreadExecutor().execute {
-                            getInstance(application).cityDao().saveData(cities)
+                            getInstance(context).cityDao().saveData(cities)
                         }
                     }
                 })

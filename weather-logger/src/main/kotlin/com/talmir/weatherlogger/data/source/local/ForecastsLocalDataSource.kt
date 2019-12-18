@@ -27,7 +27,7 @@ class ForecastsLocalDataSource internal constructor(
             }
         }
 
-    suspend fun getSingleCityForecastData(cityId: Long): Result<List<Forecast>> =
+    override suspend fun getSingleCityForecastData(cityId: Long): Result<List<Forecast>> =
         withContext(ioDispatcher) {
             return@withContext try {
                 println(cityId)
@@ -37,7 +37,7 @@ class ForecastsLocalDataSource internal constructor(
             }
         }
 
-    suspend fun saveForecastData(forecastData: List<ForecastDataEntity>) =
+    override suspend fun saveForecastData(forecastData: List<ForecastDataEntity>) =
         withContext(ioDispatcher) {
             forecastDataDao.saveData(forecastData)
         }
