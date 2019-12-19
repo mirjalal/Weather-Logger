@@ -20,6 +20,11 @@ before_script:
   - export ANDROID_HOME=$PWD/android-sdk-linux
   - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
   - chmod +x ./gradlew
+  - ls android-sdk-linux/tools/bin/sdkmanager
+  - ls android-sdk-linux/tools/bin
+  - ls $PWD/android-sdk-linux/tools
+  - ls $PWD/android-sdk-linux/tools/bin
+  - ls $PWD/android-sdk-linux/extras
 
 stages:
 #  - build
@@ -48,7 +53,7 @@ unit_tests:
 instrumentation_tests:
   stage: test
   script:
-    - ls $PWD/android-sdk-linux
+    - cd android-sdk-linux/tools/bin/sdkmanager
     - emulator -avd testAVD -no-audio -no-window &
     - ./adb wait-for-device #./ci/android-wait-for-emulator.sh
     - ./adb devices
