@@ -25,7 +25,7 @@ jobs:
       - run:
           name: Setup emulator
           #command: sdkmanager "system-images;android-29;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-29;default;armeabi-v7a"
-          command: sdkmanager "system-images;android-29;google_apis;armeabi-v7a" && echo "no" | avdmanager -v create avd -n androidEmulator -k "system-images;android-29;google_apis;armeabi-v7a" -c 2048M -g google_apis
+          command: sdkmanager "system-images;android-25;google_apis;armeabi-v7a" && echo "no" | avdmanager -v create avd -n androidEmulator -k "system-images;android-25;google_apis;armeabi-v7a" -c 2048M -g google_apis
       - run:
           name: Launch emulator
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator -avd androidEmulator -noaudio -no-boot-anim -no-window -accel on
@@ -43,3 +43,4 @@ jobs:
           destination: reports
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: weather-logger/build/test-results
+  armeabi-v7a arm64-v8a armeabi
