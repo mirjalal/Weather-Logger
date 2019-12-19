@@ -24,7 +24,8 @@ jobs:
             ./gradlew test
       - run:
           name: Setup emulator
-          command: sdkmanager "system-images;android-29;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-29;default;armeabi-v7a"
+          //command: sdkmanager "system-images;android-29;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-29;default;armeabi-v7a"
+          command: sdkmanager "system-images;android-27;google_apis;x86" && echo "no"     | avdmanager -v create avd -n androidlearn -k "system-images;android-27;google_apis;x86" -c 2048M -g google_apis  -d "Nexus 7 2013"
       - run:
           name: Launch emulator
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator -avd test -noaudio -no-boot-anim -no-window -accel on
@@ -40,3 +41,5 @@ jobs:
       - store_artifacts:
           path: weather-logger/build/reports
           destination: reports
+      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: weather-logger/build/test-results
