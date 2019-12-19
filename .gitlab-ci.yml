@@ -18,21 +18,22 @@ before_script:
   - echo y | android-sdk-linux/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" "build-tools;${ANDROID_BUILD_TOOLS}" "extras;google;m2repository" "extras;android;m2repository" > installPlatform.log
 
   - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export ADB_HOME=ANDROID_HOME/platform-tools
   - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
   - chmod +x ./gradlew
 
 stages:
-  - build
+#  - build
   - test
   - quality_assurance
 
-build_job:
-  stage: build
-  script:
-    - ./gradlew clean build
-  artifacts:
-    paths:
-    - app/build/outputs/
+#build_job:
+#  stage: build
+#  script:
+#    - ./gradlew clean build
+#  artifacts:
+#    paths:
+#    - weather-logger/build/outputs/
 
 unit_tests:
   stage: test
@@ -49,12 +50,12 @@ instrumentation_tests:
   stage: test
   script:
     - emulator -avd testAVD -no-audio -no-window &
-    - adb wait-for-device #./ci/android-wait-for-emulator.sh
-    - adb devices
-    - adb shell settings put global window_animation_scale 0 &
-    - adb shell settings put global transition_animation_scale 0 &
-    - adb shell settings put global animator_duration_scale 0 &
-    - adb shell input keyevent 82 &
+    - ./ADB_HOME/adb wait-for-device #./ci/android-wait-for-emulator.sh
+    - ./ADB_HOME/adb devices
+    - ./ADB_HOME/adb shell settings put global window_animation_scale 0 &
+    - ./ADB_HOME/adb shell settings put global transition_animation_scale 0 &
+    - ./ADB_HOME/adb shell settings put global animator_duration_scale 0 &
+    - ./ADB_HOME/adb shell input keyevent 82 &
     - ./gradlew connectedAndroidTest
     - ./ci/stop-emulators.sh
   artifacts:
