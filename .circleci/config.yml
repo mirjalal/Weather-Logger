@@ -30,6 +30,10 @@ jobs:
           name: Launch emulator
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator -avd androidEmulator -noaudio -no-boot-anim -no-window -accel on
           background: true
+      # wait for emulator to boot
+      - circle-android wait-for-boot
+      - sleep 30
+      - adb shell input keyevent 82
       - run:
           name: Run Instrumented Tests
           command: |
