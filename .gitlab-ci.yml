@@ -50,12 +50,12 @@ instrumentation_tests:
   stage: test
   script:
     - emulator -avd testAVD -no-audio -no-window &
-    - ./ADB_HOME/adb wait-for-device #./ci/android-wait-for-emulator.sh
-    - ./ADB_HOME/adb devices
-    - ./ADB_HOME/adb shell settings put global window_animation_scale 0 &
-    - ./ADB_HOME/adb shell settings put global transition_animation_scale 0 &
-    - ./ADB_HOME/adb shell settings put global animator_duration_scale 0 &
-    - ./ADB_HOME/adb shell input keyevent 82 &
+    - ./adb wait-for-device #./ci/android-wait-for-emulator.sh
+    - ./adb devices
+    - ./adb shell settings put global window_animation_scale 0 &
+    - ./adb shell settings put global transition_animation_scale 0 &
+    - ./adb shell settings put global animator_duration_scale 0 &
+    - ./adb shell input keyevent 82 &
     - ./gradlew connectedAndroidTest
     - ./ci/stop-emulators.sh
   artifacts:
