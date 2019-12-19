@@ -31,8 +31,8 @@ jobs:
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator -avd androidEmulator -noaudio -no-boot-anim -no-window -accel on
           background: true
       - run:
-          - name: Wait for emulator to boot
-          - command: |
+          name: Wait for emulator to boot
+          command: |
               circle-android wait-for-boot
               sleep 30
               adb shell input keyevent 82
