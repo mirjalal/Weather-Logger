@@ -49,6 +49,7 @@ unit_tests:
 instrumentation_tests:
   stage: test
   script:
+    - cd $PWD/android-sdk-linux/platform-tools/
     - emulator -avd testAVD -no-audio -no-window &
     - ./adb wait-for-device #./ci/android-wait-for-emulator.sh
     - ./adb devices
