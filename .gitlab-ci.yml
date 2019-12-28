@@ -1,4 +1,4 @@
-image: openjdk:8-jdk
+#image: openjdk:8-jdk
 
 variables:
   ANDROID_COMPILE_SDK: "29"
@@ -60,7 +60,7 @@ instrumentation_tests:
   stage: test
   script:
     - emulator -avd testAVD -no-audio -no-window &
-    - ./ci/android-wait-for-emulator.sh
+    - ./android-wait-for-emulator.sh
     - adb devices
     - adb shell settings put global window_animation_scale 0 &
     - adb shell settings put global transition_animation_scale 0 &
