@@ -1,42 +1,25 @@
 #!/bin/bash
 
-sec=0
-timeout=360
+# Originally written by Ralf Kistner <ralf@embarkmobile.com>, but placed in the public domain
 
-err() {
-	echo "$@"
-	exit 1
-}
+set +e
 
-explain() {
-	if [[ "$1" =~ "not found" ]]; then
-		printf "device not found"
-	elif [[ "$1" =~ "offline" ]]; then
-		printf "device offline"
-	elif [[ "$1" =~ "running" ]]; then
-		printf "booting"
-	else
-		printf "$1"
-	fi
-}
+bootanim=""
+failcounter=0
+timeout_in_sec=360
 
-while true; do
-	if [[ $sec -ge $timeout ]]; then
-		err "Timeout ($timeout seconds) reached - Failed to start emulator"
-	fi
-	out=$(adb -e shell getprop init.svc.bootanim 2>&1 | grep -v '^\*')
-	if [[ "$out" =~ "command not found" ]]; then
-		err "$out"
-	fi
-	if [[ "$out" =~ "stopped" ]]; then
-		break
-	fi
-	let "r = sec % 5"
-	if [[ $r -eq 0 ]]; then
-		echo "Waiting for emulator to start: $(explain "$out")"
-	fi
-	sleep 1
-	let "sec++"
+until [[ "$bootanim" =~ "stopped" ]]; do
+  bootanim=`adb -e shell getprop init.svc.bootanim 2>&1 &`
+  if [[ "$bootanim" =~ "device not found" || "$bootanim" =~ "device offline"
+    || "$bootanim" =~ "running" ]]; then
+    let "failcounter += 1"
+    echo "Waiting for emulator to start"
+    if [[ $failcounter -gt timeout_in_sec ]]; then
+      echo "Timeout ($timeout_in_sec seconds) reached; failed to start emulator"
+      exit 1
+    fi
+  fi
+  sleep 1
 done
 
 echo "Emulator is ready"
