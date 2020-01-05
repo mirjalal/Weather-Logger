@@ -15,7 +15,7 @@ before_script:
   - cat $ANDROID_HOME/licenses/*
 
 stages:
-  - build
+ # - build
   - test
   - quality_assurance
 
@@ -24,10 +24,10 @@ cache:
   paths:
     - .gradle/
 
-build:
-  stage: build
-  script:
-    - ./gradlew build
+#build:
+#  stage: build
+#  script:
+#    - ./gradlew build
 
 unitTests:
   stage: test
@@ -43,19 +43,19 @@ instrumentedTests:
     - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
     - $ANDROID_HOME/tools/bin/sdkmanager --update > update.log
     - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-25;google_apis;armeabi-v7a"  > installEmulator.log
-    - adb devices
-    - adb start-server
-    - adb devices
+    - $ANDROID_HOME/platform-tools/adb devices
+    - $ANDROID_HOME/platform-tools/adb start-server
+    - $ANDROID_HOME/platform-tools/adb devices
     - echo no | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name test --abi google_apis/armeabi-v7a --package "system-images;android-25;google_apis;armeabi-v7a"
     - $ANDROID_HOME/emulator/emulator -avd test -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug  -all
     - ./android-wait-for-emulator
     # Turn off animations
-    - adb shell settings put global window_animation_scale 0 &
-    - adb shell settings put global transition_animation_scale 0 &
-    - adb shell settings put global animator_duration_scale 0 &
-    - adb shell input keyevent 82
+    - $ANDROID_HOME/platform-tools/adb shell settings put global window_animation_scale 0 &
+    - $ANDROID_HOME/platform-tools/adb shell settings put global transition_animation_scale 0 &
+    - $ANDROID_HOME/platform-tools/adb shell settings put global animator_duration_scale 0 &
+    - $ANDROID_HOME/platform-tools/adb shell input keyevent 82
     - ./gradlew connectedAndroidTest
-    - adb emu kill
+    - $ANDROID_HOME/platform-tools/adb emu kill
 
 static_analysis:
   stage: quality_assurance
