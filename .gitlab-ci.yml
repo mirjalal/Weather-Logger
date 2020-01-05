@@ -15,7 +15,7 @@ before_script:
   - cat $ANDROID_HOME/licenses/*
 
 stages:
-  - build
+#  - build
   - test
   - quality_assurance
 
@@ -24,10 +24,10 @@ cache:
   paths:
     - .gradle/
 
-build:
-  stage: build
-  script:
-    - ./gradlew build
+#build:
+#  stage: build
+#  script:
+#    - ./gradlew build
 
 unitTests:
   stage: test
@@ -45,10 +45,10 @@ instrumentedTests:
 #    - $ANDROID_HOME/tools/emulator -force-32bit -avd test -no-window -no-audio &
 #    - ./android-wait-for-emulator
 #    - adb shell input keyevent 82
-    - android-sdk-linux/tools/bin/sdkmanager --update > update.log
-    - android-sdk-linux/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-${EMULATOR_VERSION};google_apis;x86_64"  > installEmulator.log
-    - echo no | android-sdk-linux/tools/bin/avdmanager create avd --force --name test --abi google_apis/x86_64 --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
-    - android-sdk-linux/emulator/emulator -avd test -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug  -all
+    - $ANDROID_HOME/tools/bin/sdkmanager --update > update.log
+    - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-${EMULATOR_VERSION};google_apis;x86_64"  > installEmulator.log
+    - echo no | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name test --abi google_apis/x86_64 --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
+    - $ANDROID_HOME/emulator/emulator -avd test -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug  -all
     - ./android-wait-for-emulator
     # Turn off animations
     - adb shell settings put global window_animation_scale 0 &
