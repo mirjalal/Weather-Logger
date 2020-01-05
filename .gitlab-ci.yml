@@ -15,7 +15,7 @@ before_script:
   - cat $ANDROID_HOME/licenses/*
 
 stages:
- # - build
+  - build
   - test
   - quality_assurance
 
@@ -24,36 +24,36 @@ cache:
   paths:
     - .gradle/
 
-#build:
-#  stage: build
-#  script:
-#    - ./gradlew build
+build:
+  stage: build
+  script:
+    - ./gradlew build
 
 unitTests:
   stage: test
   script:
     - ./gradlew test
 
-instrumentedTests:
-  stage: test
-  script:
-    - env
-    - curl -s https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator > android-wait-for-emulator
-    - chmod +x android-wait-for-emulator
-    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
-    - $ANDROID_HOME/tools/bin/sdkmanager --update > update.log
-    - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-25;google_apis;armeabi-v7a"  > installEmulator.log
-    - $ANDROID_HOME/platform-tools/adb start-server
-    - echo no | $ANDROID_HOME/tools/bin/avdmanager -v create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
-    - $ANDROID_HOME/emulator/emulator -avd test -memory 512 -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug -all
-    - ./android-wait-for-emulator
-    # Turn off animations
-    - $ANDROID_HOME/platform-tools/adb shell settings put global window_animation_scale 0 &
-    - $ANDROID_HOME/platform-tools/adb shell settings put global transition_animation_scale 0 &
-    - $ANDROID_HOME/platform-tools/adb shell settings put global animator_duration_scale 0 &
-    - $ANDROID_HOME/platform-tools/adb shell input keyevent 82
-    - ./gradlew connectedAndroidTest
-    - $ANDROID_HOME/platform-tools/adb emu kill
+#instrumentedTests:
+#  stage: test
+#  script:
+#    - env
+#    - curl -s https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator > android-wait-for-emulator
+#    - chmod +x android-wait-for-emulator
+#    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
+#    - $ANDROID_HOME/tools/bin/sdkmanager --update > update.log
+#    - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-25;google_apis;armeabi-v7a"  > installEmulator.log
+#    - $ANDROID_HOME/platform-tools/adb start-server
+#    - echo no | $ANDROID_HOME/tools/bin/avdmanager -v create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
+#    - $ANDROID_HOME/emulator/emulator -avd test -memory 512 -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug -all
+#    - ./android-wait-for-emulator
+#    # Turn off animations
+#    - $ANDROID_HOME/platform-tools/adb shell settings put global window_animation_scale 0 &
+#    - $ANDROID_HOME/platform-tools/adb shell settings put global transition_animation_scale 0 &
+#    - $ANDROID_HOME/platform-tools/adb shell settings put global animator_duration_scale 0 &
+#    - $ANDROID_HOME/platform-tools/adb shell input keyevent 82
+#    - ./gradlew connectedAndroidTest
+#    - $ANDROID_HOME/platform-tools/adb emu kill
 
 static_analysis:
   stage: quality_assurance
