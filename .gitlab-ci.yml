@@ -43,7 +43,7 @@ instrumentedTests:
     - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-$ANDROID_COMPILE_SDK;google_apis;x86"
     - $ANDROID_HOME/tools/bin/sdkmanager --update > update.log
     - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-$ANDROID_COMPILE_SDK;google_apis;x86"  > installEmulator.log
-    - echo no | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name test --abi google_apis/x86 --package "system-images;android-$ANDROID_COMPILE_SDK;google_apis_playstore;x86"
+    - echo no | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name test --abi google_apis/x86 --package "system-images;android-$ANDROID_COMPILE_SDK;google_apis;x86"
     - $ANDROID_HOME/emulator/emulator -avd test -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug  -all
     - ./android-wait-for-emulator
     # Turn off animations
