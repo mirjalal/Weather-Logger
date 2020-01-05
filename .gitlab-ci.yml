@@ -40,7 +40,7 @@ instrumentedTests:
     - env
     - curl -s https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator > android-wait-for-emulator
     - chmod +x android-wait-for-emulator
-    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-$ANDROID_COMPILE_SDK;google_apis;armeabi-v7a"
+    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
     - $ANDROID_HOME/tools/bin/sdkmanager --update > update.log
     - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-25;google_apis;armeabi-v7a"  > installEmulator.log
     - echo no | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name test --abi google_apis/armeabi-v7a --package "system-images;android-25;google_apis;armeabi-v7a"
