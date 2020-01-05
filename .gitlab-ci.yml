@@ -43,6 +43,9 @@ instrumentedTests:
     - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
     - $ANDROID_HOME/tools/bin/sdkmanager --update > update.log
     - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-25;google_apis;armeabi-v7a"  > installEmulator.log
+    - adb devices
+    - adb start-server
+    - adb devices
     - echo no | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name test --abi google_apis/armeabi-v7a --package "system-images;android-25;google_apis;armeabi-v7a"
     - $ANDROID_HOME/emulator/emulator -avd test -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug  -all
     - ./android-wait-for-emulator
