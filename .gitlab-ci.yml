@@ -44,10 +44,8 @@ instrumentedTests:
     - $ANDROID_HOME/tools/bin/sdkmanager --update > update.log
     - $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-25;google_apis;armeabi-v7a"  > installEmulator.log
     - $ANDROID_HOME/platform-tools/adb start-server
-#    - echo no | $ANDROID_HOME/tools/bin/avdmanager -v create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
     - echo no | $ANDROID_HOME/tools/bin/avdmanager -v create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
-    # create avd --force --name test --abi google_apis/armeabi-v7a --package "system-images;android-25;google_apis;armeabi-v7a"
-    - $ANDROID_HOME/emulator/emulator -avd test -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug  -all
+    - $ANDROID_HOME/emulator/emulator -avd test -memory 512 -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug -all
     - ./android-wait-for-emulator
     # Turn off animations
     - $ANDROID_HOME/platform-tools/adb shell settings put global window_animation_scale 0 &
