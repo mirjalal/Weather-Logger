@@ -40,12 +40,23 @@ instrumentedTests:
     - env
     - curl -s https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator > android-wait-for-emulator
     - chmod +x android-wait-for-emulator
-    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-$ANDROID_COMPILE_SDK;google_apis;x86"
-    - echo no | $ANDROID_HOME/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_COMPILE_SDK;google_apis;x86" --abi google_apis/x86
-    - $ANDROID_HOME/tools/emulator -force-32bit -avd test -no-window -no-audio &
+#    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-$ANDROID_COMPILE_SDK;google_apis;x86"
+#    - echo no | $ANDROID_HOME/tools/bin/avdmanager create avd -n test -k "system-images;android-$ANDROID_COMPILE_SDK;google_apis;x86" --abi google_apis/x86
+#    - $ANDROID_HOME/tools/emulator -force-32bit -avd test -no-window -no-audio &
+#    - ./android-wait-for-emulator
+#    - adb shell input keyevent 82
+    - android-sdk-linux/tools/bin/sdkmanager --update > update.log
+    - android-sdk-linux/tools/bin/sdkmanager "platform-tools" "emulator" "system-images;android-${EMULATOR_VERSION};google_apis;x86_64"  > installEmulator.log
+    - echo no | android-sdk-linux/tools/bin/avdmanager create avd --force --name test --abi google_apis/x86_64 --package "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
+    - android-sdk-linux/emulator/emulator -avd test -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu off -debug  -all
     - ./android-wait-for-emulator
+    # Turn off animations
+    - adb shell settings put global window_animation_scale 0 &
+    - adb shell settings put global transition_animation_scale 0 &
+    - adb shell settings put global animator_duration_scale 0 &
     - adb shell input keyevent 82
     - ./gradlew connectedAndroidTest
+    - adb emu kill
 
 static_analysis:
   stage: quality_assurance
