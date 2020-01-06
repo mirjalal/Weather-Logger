@@ -1,11 +1,12 @@
-image: docker:git #mirjalal/gitlab-ci-docker-image
+image: mirjalal/gitlab-ci-docker-image
+
 services:
   - docker:dind
 
-build:
-  script:
-    - docker build -t mirjalal/gitlab-ci-docker-image .
-    - docker push mirjalal/gitlab-ci-docker-image
+#build:
+#  script:
+#    - docker build -t mirjalal/gitlab-ci-docker-image .
+#    - docker push mirjalal/gitlab-ci-docker-image
 
 variables:
   ANDROID_COMPILE_SDK: "29"
@@ -22,7 +23,7 @@ before_script:
   - cat $ANDROID_HOME/licenses/*
 
 stages:
-  - build
+#  - build
   - test
 #  - quality_assurance
 

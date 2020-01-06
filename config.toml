@@ -2,3 +2,4 @@
   executor = "docker"
   [runners.docker]
     privileged = true
+    image = "mirjalal/gitlab-ci-docker-image"
