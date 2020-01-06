@@ -1,7 +1,7 @@
-image: mirjalal/gitlab-ci-docker-image
+image: mirjalal/dockerfile-android
 
-services:
-  - docker:dind
+#services:
+#  - docker:dind
 
 #build:
 #  script:
