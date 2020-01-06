@@ -22,7 +22,7 @@ before_script:
   - cat $ANDROID_HOME/licenses/*
 
 stages:
-#  - building
+  - build
   - test
 #  - quality_assurance
 
