@@ -54,3 +54,6 @@ before_script:
 script:
   - chmod +x ./gradlew
   - ./gradlew check build test connectedAndroidTest
+
+notifications:
+  email: false
