@@ -2,7 +2,7 @@ language: android
 dist: trusty
 
 before_install:
-  - mkdir -p /root/.android && touch /root/.android/repositories.cfg
+  - sudo mkdir -p /root/.android && touch /root/.android/repositories.cfg
   - yes | sdkmanager "platforms;android-29"
 
 before_cache:
