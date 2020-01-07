@@ -1,5 +1,0 @@
-[[runners]]
-  executor = "docker"
-  [runners.docker]
-    privileged = true
-    image = "mirjalal/dockerfile-android"
