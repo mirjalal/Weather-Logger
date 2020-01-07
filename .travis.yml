@@ -4,8 +4,8 @@ env:
     - EMULATOR_API=24
     - ANDROID_BUILD_TOOLS=29.0.2
 
-#jdk:
-#  - oraclejdk8
+jdk:
+  - oraclejdk8
 
 language: android
 dist: trusty
@@ -53,4 +53,7 @@ before_script:
 
 script:
   - chmod +x ./gradlew
+  - ./gradlew check
+  - ./gradlew build
+  - ./gradlew test
   - ./gradlew connectedAndroidTest
