@@ -3,11 +3,6 @@ image: mirjalal/dockerfile-android
 services:
   - docker:dind
 
-#build:
-#  script:
-#    - docker build -t mirjalal/gitlab-ci-docker-image .
-#    - docker push mirjalal/gitlab-ci-docker-image
-
 variables:
   ANDROID_COMPILE_SDK: "29"
   ANDROID_BUILD_TOOLS: "29.0.2"
@@ -23,7 +18,7 @@ before_script:
   - cat $ANDROID_HOME/licenses/*
 
 stages:
-#  - build
+  - build
   - test
 #  - quality_assurance
 
@@ -32,15 +27,15 @@ cache:
   paths:
     - .gradle/
 
-#building:
-#  stage: build
-#  script:
-#    - ./gradlew build
+building:
+  stage: build
+  script:
+    - ./gradlew build
 
-#unitTests:
-#  stage: test
-#  script:
-#    - ./gradlew test
+unitTests:
+  stage: test
+  script:
+    - ./gradlew test
 
 instrumentedTests:
   stage: test
@@ -55,7 +50,7 @@ instrumentedTests:
     - $ANDROID_HOME/platform-tools/adb devices
 #    - echo no | $ANDROID_HOME/tools/bin/avdmanager -v create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a"
 #    - $ANDROID_HOME/emulator/emulator -avd test -memory 512 -no-boot-anim -no-snapshot-save -no-audio -no-window -gpu auto -debug -all
-    - ./android-wait-for-emulator
+#    - ./android-wait-for-emulator
     # Turn off animations
     - $ANDROID_HOME/platform-tools/adb shell settings put global window_animation_scale 0 &
     - $ANDROID_HOME/platform-tools/adb shell settings put global transition_animation_scale 0 &
