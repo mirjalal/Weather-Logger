@@ -64,7 +64,6 @@ class CityForecastDetailsFragmentTest {
                         sunset,
                         requestTime
                     )
-
                 )
             )
         }

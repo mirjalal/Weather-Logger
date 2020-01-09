@@ -9,9 +9,6 @@ dist: trusty
 os:
   - linux
 
-#jdk:
-#  - oraclejdk8
-
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -43,7 +40,7 @@ before_install:
   - yes | sdkmanager "platforms;android-29"
 
 before_script:
-  - curl -s https://raw.githubusercontent.com/travis-ci/travis-cookbooks/0f497eb71291b52a703143c5cd63a217c8766dc9/community-cookbooks/android-sdk/files/default/android-wait-for-emulator > android-wait-for-emulator
+  - curl -s https://gist.githubusercontent.com/mirjalal/e835d3feef58a637fa0b1f342dd436db/raw/fd769d03f056b6f18bfadd1098a2f201f6688f15/android-wait-for-emulator > android-wait-for-emulator
   - chmod +x android-wait-for-emulator
   - echo y | android update sdk -a --no-ui --filter android-$EMULATOR_API
   - echo y | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-$EMULATOR_API
