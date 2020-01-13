@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.talmir.weatherlogger.databinding.FragmentHomeBinding
@@ -12,14 +13,15 @@ import com.talmir.weatherlogger.helpers.weather.Forecast
 import com.talmir.weatherlogger.helpers.weather.ForecastAdapter
 import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
-class HomeFragment : com.talmir.weatherlogger.helpers.Fragment<HomeViewModel>(),
+class HomeFragment : Fragment(),
     DiscreteScrollView.ScrollStateChangeListener<ForecastAdapter.ForecastViewHolder>,
     DiscreteScrollView.OnItemChangedListener<ForecastAdapter.ForecastViewHolder> {
 
-    override val viewModelType: Class<HomeViewModel>
-        get() = HomeViewModel::class.java
+    // Lazy inject HomeViewModel
+    private val viewModel : HomeViewModel by viewModel()
 
     private lateinit var binding: FragmentHomeBinding
 

@@ -4,20 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.talmir.weatherlogger.R
 import com.talmir.weatherlogger.databinding.FragmentCityForecastDetailsBinding
-import com.talmir.weatherlogger.helpers.Fragment
 import com.talmir.weatherlogger.helpers.cityNameById
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class CityForecastDetailsFragment : Fragment<CityForecastDetailsViewModel>() {
+class CityForecastDetailsFragment : Fragment() {
 
-    override val viewModelType: Class<CityForecastDetailsViewModel>
-        get() = CityForecastDetailsViewModel::class.java
-
-    override val cityId: Long
+    private val cityId: Long
         get() = CityForecastDetailsFragmentArgs.fromBundle(requireArguments()).cityId
+
+    private val viewModel : CityForecastDetailsViewModel by viewModel {
+        parametersOf(cityId)
+    }
 
     private lateinit var binding: FragmentCityForecastDetailsBinding
 
@@ -36,7 +39,7 @@ class CityForecastDetailsFragment : Fragment<CityForecastDetailsViewModel>() {
                     CityForecastDetailsFragmentDirections.actionFragmentCityForecastDetailsToFragmentHome()
                 )
             }
-            title = "Forecast data for ${cityId.cityNameById()}"
+            title = getString(R.string.city_forecast_data).format(cityId.cityNameById())
             setTitleTextColor(resources.getColor(R.color.white, null))
         }
 

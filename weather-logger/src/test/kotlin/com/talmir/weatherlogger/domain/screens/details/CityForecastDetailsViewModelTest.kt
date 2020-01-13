@@ -1,4 +1,4 @@
-package com.talmir.weatherlogger.domain.screens.home
+package com.talmir.weatherlogger.domain.screens.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.talmir.weatherlogger.CoroutineTestRule
@@ -16,12 +16,11 @@ import org.junit.Rule
 import org.junit.Test
 import java.util.Date
 
-class HomeViewModelTest {
-
+class CityForecastDetailsViewModelTest {
     private lateinit var forecastsRepository: FakeForecastRepository
 
     // subject under test
-    private lateinit var forecastsViewModel: HomeViewModel
+    private lateinit var forecastsViewModel: CityForecastDetailsViewModel
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -41,13 +40,12 @@ class HomeViewModelTest {
 
         forecastsRepository.addForecasts(forecastData1, forecastData2, forecastData3, forecastData4, forecastData5)
 
-        forecastsViewModel = HomeViewModel(forecastsRepository)
+        forecastsViewModel = CityForecastDetailsViewModel(forecastsRepository, forecastData3.cityId)
     }
 
     @Test
-    fun getForecastData_returnsNotNullValue() {
-        // the new forecast value is triggered
-        val value = forecastsViewModel.forecastData.getOrAwaitValue() //value
+    fun getForecastDetailsData_returnsNotNullValue() {
+        val value = forecastsViewModel.cityForecastDetails.getOrAwaitValue() //value
         assertThat(value, not(nullValue()))
     }
 }

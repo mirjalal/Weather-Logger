@@ -97,6 +97,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_arch_lifecycle"
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
+    implementation "androidx.work:work-runtime-ktx:$version_work"
 
     // Kotlin support
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
@@ -104,6 +105,10 @@ dependencies {
     // Kotlin Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
+
+    // Koin Dependency Injection
+    implementation "org.koin:koin-androidx-scope:$version_koin"
+    implementation "org.koin:koin-androidx-viewmodel:$version_koin"
 
     // Retrofit2 with moshi converter
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
@@ -139,6 +144,7 @@ dependencies {
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.work:work-testing:$version_work"
 
     // Dependencies for Android instrumented unit tests
     androidTestImplementation "junit:junit:$junitVersion"

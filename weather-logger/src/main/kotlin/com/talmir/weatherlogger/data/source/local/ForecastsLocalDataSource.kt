@@ -30,7 +30,6 @@ class ForecastsLocalDataSource internal constructor(
     override suspend fun getSingleCityForecastData(cityId: Long): Result<List<Forecast>> =
         withContext(ioDispatcher) {
             return@withContext try {
-                println(cityId)
                 Result.Success(cityForecastDataDao.getCityForecastData(cityId).toForecast())
             } catch (e: Exception) {
                 Result.Error(e)

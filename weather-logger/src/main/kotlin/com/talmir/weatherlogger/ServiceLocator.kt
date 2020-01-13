@@ -7,11 +7,10 @@ import com.talmir.weatherlogger.data.IForecastsRepository
 import com.talmir.weatherlogger.data.source.local.ForecastsLocalDataSource
 import com.talmir.weatherlogger.data.source.local.room.utils.AppDatabase
 import com.talmir.weatherlogger.data.source.remote.ForecastsRemoteDataSource
-import kotlinx.coroutines.runBlocking
 
 /**
  * The service locator pattern involves making a singleton class called
- * a [ServiceLocator] whose pupose is to store and provide dependencies.
+ * a [ServiceLocator] whose purpose is to store and provide dependencies.
  * The service locator does this both for the regular code and for test
  * code. Whenever you need a dependency, instead of constructing it
  * yourself you create a service locator and then you get the dependencies
