@@ -1,6 +1,6 @@
 package com.talmir.weatherlogger.data.source.remote
 
-import com.talmir.weatherlogger.data.ForecastsDataSource
+import com.talmir.weatherlogger.data.IForecastDataSource
 import com.talmir.weatherlogger.data.Result
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 import com.talmir.weatherlogger.data.source.remote.network.ForecastRemoteDataRetrieverApi.forecastDataRetrieverService
@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 class ForecastsRemoteDataSource internal constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-): ForecastsDataSource {
+): IForecastDataSource {
 
     override suspend fun getForecastData(): Result<List<Forecast>> =
         withContext(ioDispatcher) {

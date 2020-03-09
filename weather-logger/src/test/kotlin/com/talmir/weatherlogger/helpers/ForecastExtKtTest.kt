@@ -31,7 +31,7 @@ class ForecastExtKtTest {
             Forecast(2L,"Sumgait", R.drawable.sumgait_industrial_city, 511, 16, 762, 82, 36f, 32131132, 1231124, requestTime),
             Forecast(3L,"Lenkaran", R.drawable.lenkaran_samovar, 622, 35, 762, 44, 14f, 32131132, 1231124, requestTime),
             Forecast(4L,"Shamakhi", R.drawable.shamakhi_observatory_city, 701, 15, 762, 67, 65f, 32131132, 1231124, requestTime),
-            Forecast(5L,"Goychay", R.drawable.baku_maiden_tower, 200, 9, 762, 67, 87f, 32131132, 1231124, requestTime)
+            Forecast(5L,"Goychay", R.drawable.goychay_pomegranate_city, 200, 9, 762, 67, 87f, 32131132, 1231124, requestTime)
         )
 
         assertThat(forecastEntityList.toForecast(), `is`(equalTo(forecastList)))
@@ -89,7 +89,7 @@ class ForecastExtKtTest {
             Forecast(2L, "Sumgait", R.drawable.sumgait_industrial_city, 511, 16, 762, 82, 36f, 32131132, 1231124, requestTime),
             Forecast(3L, "Lenkaran", R.drawable.lenkaran_samovar, 622, 35, 762, 44, 14f, 32131132, 1231124, requestTime),
             Forecast(4L, "Shamakhi", R.drawable.shamakhi_observatory_city, 701, 15, 762, 67, 65f, 32131132, 1231124, requestTime),
-            Forecast(5L, "Goychay", R.drawable.baku_maiden_tower, 200, 9, 762, 67, 87f, 32131132, 1231124, requestTime)
+            Forecast(5L, "Goychay", R.drawable.goychay_pomegranate_city, 200, 9, 762, 67, 87f, 32131132, 1231124, requestTime)
         )
 
         assertThat(apiModelWeatherList.toForecast(), `is`(equalTo(forecastList)))

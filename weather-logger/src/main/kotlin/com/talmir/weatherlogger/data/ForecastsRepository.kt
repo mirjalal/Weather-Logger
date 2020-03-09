@@ -13,11 +13,11 @@ import kotlinx.coroutines.withContext
  * the remote data source fails. Remote is the source of truth.
  */
 class ForecastsRepository(
-    private val forecastsRemoteDataSource: ForecastsDataSource,
-    private val forecastsLocalDataSource: ForecastsDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) : IForecastsRepository {
-
-    override suspend fun getCityForecastData(cityId: Long) =
+    private val forecastsRemoteDataSource: IForecastDataSource,
+    private val forecastsLocalDataSource: IForecastDataSource,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : IForecastRepository {
+    override suspend fun getSingleCityForecastData(cityId: Long) =
         withContext(ioDispatcher) {
             return@withContext forecastsLocalDataSource.getSingleCityForecastData(cityId)
         }

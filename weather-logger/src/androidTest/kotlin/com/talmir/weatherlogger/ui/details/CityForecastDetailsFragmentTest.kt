@@ -1,4 +1,4 @@
-package com.talmir.weatherlogger.domain.screens.details
+package com.talmir.weatherlogger.ui.details
 
 import android.content.Context
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -13,7 +13,7 @@ import androidx.test.filters.MediumTest
 import com.talmir.weatherlogger.R
 import com.talmir.weatherlogger.ServiceLocator
 import com.talmir.weatherlogger.data.FakeForecastRepository
-import com.talmir.weatherlogger.data.IForecastsRepository
+import com.talmir.weatherlogger.data.IForecastRepository
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 import com.talmir.weatherlogger.helpers.Constants
 import com.talmir.weatherlogger.helpers.weather.Forecast
@@ -32,7 +32,7 @@ import java.util.Date
 class CityForecastDetailsFragmentTest {
 
     private lateinit var context: Context
-    private lateinit var fakeRepository: IForecastsRepository
+    private lateinit var fakeRepository: IForecastRepository
 
     @Before
     fun initRepository() {

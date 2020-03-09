@@ -8,4 +8,5 @@
     <string name="humidity"><b>Humidity: </b>%1$d pct</string>
     <string name="wind"><b>Wind: </b>%1$f m/s</string>
     <string name="city_forecast_data">Forecast data for %s</string>
+    <string name="city_icon">city icon</string>
 </resources>

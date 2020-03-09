@@ -1,8 +1,8 @@
 package com.talmir.weatherlogger.koin
 
 import com.talmir.weatherlogger.ServiceLocator
-import com.talmir.weatherlogger.domain.screens.details.CityForecastDetailsViewModel
-import com.talmir.weatherlogger.domain.screens.home.HomeViewModel
+import com.talmir.weatherlogger.ui.details.CityForecastDetailsViewModel
+import com.talmir.weatherlogger.ui.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

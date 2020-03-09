@@ -3,7 +3,7 @@ package com.talmir.weatherlogger
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.talmir.weatherlogger.data.ForecastsRepository
-import com.talmir.weatherlogger.data.IForecastsRepository
+import com.talmir.weatherlogger.data.IForecastRepository
 import com.talmir.weatherlogger.data.source.local.ForecastsLocalDataSource
 import com.talmir.weatherlogger.data.source.local.room.utils.AppDatabase
 import com.talmir.weatherlogger.data.source.remote.ForecastsRemoteDataSource
@@ -32,13 +32,13 @@ object ServiceLocator {
     private val lock = Any()
 
     @Volatile
-    var forecastsRepository: IForecastsRepository? = null
+    var forecastsRepository: IForecastRepository? = null
         @VisibleForTesting set
 
     /**
      * Function to provide a [ForecastsRepository] instance.
      */
-    fun provideForecastRepository(context: Context): IForecastsRepository {
+    fun provideForecastRepository(context: Context): IForecastRepository {
         synchronized(this) {
             return forecastsRepository ?: createForecastRepository(context)
         }

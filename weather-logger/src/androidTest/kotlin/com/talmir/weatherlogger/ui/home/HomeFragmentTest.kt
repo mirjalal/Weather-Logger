@@ -1,4 +1,4 @@
-package com.talmir.weatherlogger.domain.screens.home
+package com.talmir.weatherlogger.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -11,11 +11,15 @@ import androidx.test.filters.MediumTest
 import com.talmir.weatherlogger.R
 import com.talmir.weatherlogger.ServiceLocator
 import com.talmir.weatherlogger.data.FakeForecastRepository
-import com.talmir.weatherlogger.data.IForecastsRepository
+import com.talmir.weatherlogger.data.IForecastRepository
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataEntity
 import com.talmir.weatherlogger.helpers.Constants
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -27,7 +31,7 @@ import java.util.Date
 @ExperimentalCoroutinesApi
 class HomeFragmentTest {
 
-    private lateinit var fakeRepository: IForecastsRepository
+    private lateinit var fakeRepository: IForecastRepository
     private val forecasts = listOf(
         ForecastDataEntity(Constants.BAKU_CITY_ID, 802, 14, 762, 67, 28f, 32131132, 1231124, Date()), // data for Baku
         ForecastDataEntity(Constants.SUMGAIT_CITY_ID, 511, 16, 762, 82, 36f, 32131132, 1231124, Date()),   // data for Sumgait

@@ -1,9 +1,10 @@
-package com.talmir.weatherlogger.domain.screens.details
+package com.talmir.weatherlogger.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -40,7 +41,7 @@ class CityForecastDetailsFragment : Fragment() {
                 )
             }
             title = getString(R.string.city_forecast_data).format(cityId.cityNameById())
-            setTitleTextColor(resources.getColor(R.color.white, null))
+            setTitleTextColor(ContextCompat.getColor(context, R.color.white))
         }
 
         viewModel.cityForecastDetails.observe(viewLifecycleOwner, Observer {

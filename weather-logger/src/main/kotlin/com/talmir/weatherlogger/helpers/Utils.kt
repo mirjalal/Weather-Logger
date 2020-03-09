@@ -26,7 +26,7 @@ fun Long.cityIconById() =
         2L, 584923L -> com.talmir.weatherlogger.R.drawable.sumgait_industrial_city
         3L, 147613L -> com.talmir.weatherlogger.R.drawable.lenkaran_samovar
         4L, 585156L -> com.talmir.weatherlogger.R.drawable.shamakhi_observatory_city
-        else -> com.talmir.weatherlogger.R.drawable.baku_maiden_tower
+        else -> com.talmir.weatherlogger.R.drawable.goychay_pomegranate_city
     }
 
 fun Int.weatherName(): String {

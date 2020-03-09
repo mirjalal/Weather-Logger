@@ -1,4 +1,4 @@
-package com.talmir.weatherlogger.domain.screens
+package com.talmir.weatherlogger.ui
 
 import android.os.Bundle
 import android.widget.Toast

@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".domain.screens.MainActivity">
+    tools:context="com.talmir.weatherlogger.ui.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
             android:layout_marginTop="32dp"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_refresh"
-            android:layout_gravity="top|end" />
+            android:layout_gravity="top|end"
+            android:contentDescription="@string/city_icon" />
     </FrameLayout>
 </layout>

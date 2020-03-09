@@ -1,6 +1,6 @@
 package com.talmir.weatherlogger.data.source.local
 
-import com.talmir.weatherlogger.data.ForecastsDataSource
+import com.talmir.weatherlogger.data.IForecastDataSource
 import com.talmir.weatherlogger.data.Result
 import com.talmir.weatherlogger.data.source.local.room.city_forecast_data.CityForecastDataDao
 import com.talmir.weatherlogger.data.source.local.room.forecast_data.ForecastDataDao
@@ -16,7 +16,7 @@ class ForecastsLocalDataSource internal constructor(
     private val forecastDataDao: ForecastDataDao,
     private val cityForecastDataDao: CityForecastDataDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ForecastsDataSource {
+) : IForecastDataSource {
 
     override suspend fun getForecastData(): Result<List<Forecast>> =
         withContext(ioDispatcher) {

@@ -1,4 +1,4 @@
-package com.talmir.weatherlogger.domain.screens.home
+package com.talmir.weatherlogger.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
