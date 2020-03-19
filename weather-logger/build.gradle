@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.talmir.weatherlogger"
+        applicationId "az.talmir.weatherlogger"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -17,13 +17,17 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments clearPackageData: 'true'
 
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                    "room.schemaLocation":"$projectDir/schemas".toString(),
-                    "room.incremental":"true",
-                    "room.expandProjection":"true"
+                    "room.schemaLocation": "$projectDir/schemas".toString(),
+                    "room.incremental": "true",
+                    "room.expandProjection": "true"
                 ]
             }
         }
@@ -31,18 +35,19 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
-    dataBinding {
-        enabled = true
-    }
+    viewBinding.enabled = true
+
+    dataBinding.enabled = true
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     sourceSets {
@@ -90,11 +95,10 @@ dependencies {
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
-    implementation "androidx.lifecycle:lifecycle-extensions:$version_arch_lifecycle"
-    kapt "androidx.lifecycle:lifecycle-common-java8:$version_arch_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_arch_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_arch_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_arch_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-extensions:$version_arch_lifecycle_extensions"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_arch_lifecycle_livedata"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_arch_lifecycle_viewmodel"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_arch_lifecycle_runtime"
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
     implementation "androidx.work:work-runtime-ktx:$version_work"
@@ -120,8 +124,7 @@ dependencies {
 
     // 3rd party
     implementation "com.yarolegovich:discrete-scrollview:$version_discrete_scrollview"
-    implementation 'pl.hypeapp:materialtimelineview:1.1'
-    implementation 'org.ocpsoft.prettytime:prettytime:4.0.3.Final'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
     implementation 'me.jorgecastillo:androidcolorx:0.2.0'
 
     // Dependencies for local unit tests
@@ -153,6 +156,16 @@ dependencies {
 
     // Testing code should not be included in the main code.
     // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.
-    implementation "androidx.fragment:fragment-testing:$fragmentVersion"
-    implementation "androidx.test:core:$androidXTestCoreVersion"
+    debugImplementation 'androidx.fragment:fragment-testing:1.3.0-alpha01'
+    debugImplementation 'androidx.test:core:1.3.0-alpha04'
+
+//    debugImplementation ("androidx.fragment:fragment-testing:$version_fragment") {
+//        exclude group: 'androidx.test', module: 'core'
+//    }
+//    debugImplementation("androidx.fragment:fragment-ktx:$version_fragment")
+//    debugImplementation("androidx.test:core:$androidXTestCoreVersion")
+//    debugImplementation("androidx.test:rules:$androidXTestRulesVersion")
+//    debugImplementation("androidx.test:runner:1.2.0")
+
+//    androidTestUtil 'androidx.test:orchestrator:1.2.0'
 }

@@ -2,37 +2,75 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.talmir.weatherlogger.ui.MainActivity">
+    tools:context="az.talmir.weatherlogger.ui.MainActivity">
 
+    <data>
+        <variable name="loadingState" type="Integer" />
+        <variable name="noDataState" type="Integer" />
+        <variable name="forecastState" type="Integer" />
+    </data>
+    
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.talmir.weatherlogger.helpers.weather.ForecastView
-            android:id="@+id/forecast_view"
+        <androidx.constraintlayout.motion.widget.MotionLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"/>
+            app:layoutDescription="@xml/rotatable_sun"
+            android:visibility="@{loadingState}">
 
-        <com.yarolegovich.discretescrollview.DiscreteScrollView
-            android:id="@+id/forecast_city_picker"
+            <ImageView
+                android:id="@+id/sun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/loading"
+                app:srcCompat="@drawable/ic_rotating_sun" />
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+
+        <TextView
+            android:visibility="@{noDataState}"
+            android:drawableTop="@drawable/ic_no_forecast_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="60dp" />
-
-        <ImageView
-            android:id="@+id/refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_margin="8dp"
             android:padding="8dp"
-            app:srcCompat="@drawable/ic_refresh"
-            android:layout_gravity="top|end"
-            android:contentDescription="@string/city_icon" />
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text="@string/sorry_no_weather_for_now" />
+
+        <FrameLayout
+            android:visibility="@{forecastState}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <az.talmir.weatherlogger.helpers.weather.ForecastView
+                android:id="@+id/forecast_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"/>
+
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
+                android:id="@+id/forecast_city_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="60dp" />
+
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp"
+                android:padding="8dp"
+                app:srcCompat="@drawable/ic_refresh"
+                android:layout_gravity="top|end"
+                android:contentDescription="@string/city_icon" />
+        </FrameLayout>
     </FrameLayout>
 </layout>

@@ -5,7 +5,7 @@
 
     <data>
         <variable name="prettyDate" type="org.ocpsoft.prettytime.PrettyTime" />
-        <variable name="forecast" type="com.talmir.weatherlogger.helpers.weather.Forecast" />
+        <variable name="forecast" type="az.talmir.weatherlogger.helpers.weather.Forecast" />
     </data>
 
     <androidx.cardview.widget.CardView

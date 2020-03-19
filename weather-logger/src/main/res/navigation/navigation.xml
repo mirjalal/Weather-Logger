@@ -5,7 +5,7 @@
     app:startDestination="@id/fragmentHome">
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="com.talmir.weatherlogger.ui.home.HomeFragment"
+        android:name="az.talmir.weatherlogger.ui.home.HomeFragment"
         android:label="FragmentHome">
         <action
             android:id="@+id/action_fragmentHome_to_fragmentCityForecastDetails"
@@ -13,13 +13,15 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCityForecastDetails"
-        android:name="com.talmir.weatherlogger.ui.details.CityForecastDetailsFragment"
+        android:name="az.talmir.weatherlogger.ui.details.CityForecastDetailsFragment"
         android:label="FragmentCityForecastDetails">
         <argument
             android:name="cityId"
             app:argType="long" />
         <action
             android:id="@+id/action_fragmentCityForecastDetails_to_fragmentHome"
-            app:destination="@id/fragmentHome" />
+            app:destination="@id/fragmentHome"
+            app:popUpTo="@id/fragmentHome"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
